@@ -1,5 +1,9 @@
 (() => {
   'use strict';
+  const mobileLayout=matchMedia('(max-width:760px)');
+  mobileLayout.addEventListener('change',()=>location.reload());
+  if(mobileLayout.matches){document.documentElement.classList.remove('gallery-boot');return;}
+
   const stage = document.querySelector('.gallery-stage');
   const cards = [...stage.querySelectorAll('.gallery-slide')];
   const title = document.querySelector('#project-title a');

@@ -75,3 +75,19 @@ dialog{width:100%;height:100svh;max-width:none;max-height:none;margin:0;padding:
 .gallery-caption .project-context,.gallery-caption .project-action{display:flex;align-items:center;min-height:48px}
 .gallery-caption .project-action{justify-content:flex-end}
 @media(min-width:901px){.gallery-caption .project-navigation{position:relative}.gallery-caption #project-position{position:absolute;top:100%;left:0;width:100%;margin-top:5px}}
+
+/* Mobile uses a native vertical project list rather than the curved carousel. */
+.mobile-projects{display:none}
+@media(max-width:760px){
+ body.portfolio-page{overflow-x:hidden}
+ .home-header{position:relative;padding:24px 20px 36px;gap:16px}
+ .home-header nav{gap:16px;align-items:baseline}
+ .gallery{display:none!important}
+ .mobile-projects{display:grid;gap:40px;padding:0 20px 48px}
+ .mobile-project{display:block;min-width:0;color:#171717}
+ .mobile-project img{display:block;width:100%;height:auto;aspect-ratio:8/5;object-fit:contain;background:#f6f6f5}
+ .mobile-project h2{font-size:22px;font-weight:700;line-height:1.25;letter-spacing:-.025em;margin:18px 0 8px}
+ .mobile-project .mobile-discipline{font-size:13px;line-height:1.5;color:#626262;margin:0 0 8px}
+ .mobile-project .mobile-note{font-size:15px;line-height:1.55;color:#414141;margin:0;max-width:42ch}
+ .mobile-project:active{opacity:.8}
+}
