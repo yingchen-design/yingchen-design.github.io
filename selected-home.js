@@ -16,22 +16,21 @@
   let current = 0, target = 0, active = -1, frame = 0, lastTime = 0, drag = null;
   let width = 0, stride = 0, clickBlockedUntil = 0, settleTimer = 0, language = 'en';
   const autoButton=document.querySelector('#toggle-autoplay'),autoLabel=document.querySelector('.autoplay-label'),autoBar=document.querySelector('.autoplay-progress i');
-  let autoPaused=reduced.matches,autoHover=false,autoElapsed=0,autoLast=performance.now();
-  function stopAutoplay(){autoPaused=true;autoElapsed=0;}
-  autoButton.addEventListener('click',()=>{autoPaused=!autoPaused;autoElapsed=0;autoLast=performance.now();});
+  let autoPaused=reduced.matches,autoHover=false;
+  const autoCanMove=()=>!autoPaused&&!autoHover&&!reduced.matches&&!document.hidden&&!drag&&!document.documentElement.classList.contains('gallery-boot');
+  function stopAutoplay(){autoPaused=true;}
+  autoButton.addEventListener('click',()=>{autoPaused=!autoPaused;requestFrame();});
   stage.addEventListener('pointerenter',()=>{autoHover=true;});
-  stage.addEventListener('pointerleave',()=>{autoHover=false;autoLast=performance.now();});
+  stage.addEventListener('pointerleave',()=>{autoHover=false;requestFrame();});
   stage.addEventListener('pointerdown',stopAutoplay);
   document.querySelector('.gallery').addEventListener('focusin',event=>{if(event.target!==autoButton)stopAutoplay();});
   const autoTimer=setInterval(()=>{
-    const now=performance.now(),dt=Math.min(now-autoLast,200);autoLast=now;
     const stopped=autoPaused||autoHover||reduced.matches||document.hidden||!!drag||document.documentElement.classList.contains('gallery-boot');
-    if(!stopped)autoElapsed+=dt;
-    autoBar.style.transform=`scaleX(${Math.min(1,autoElapsed/3000)})`;
+    autoBar.style.transform=`scaleX(${mod(current,count)/count})`;
     const ja=language==='ja';
     const label=reduced.matches?(ja?'手動切替':'Manual'):stopped?(ja?'一時停止':'Paused'):(ja?'自動再生':'Auto');if(autoLabel.textContent!==label)autoLabel.textContent=label;
     autoButton.disabled=reduced.matches;position.setAttribute('aria-live',stopped?'polite':'off');autoButton.textContent=autoPaused?'▶':'Ⅱ';autoButton.setAttribute('aria-label',autoPaused?(ja?'自動再生を開始':'Start automatic slideshow'):(ja?'自動再生を一時停止':'Pause automatic slideshow'));
-    if(autoElapsed>=3000){autoElapsed=0;target=Math.round(target)+1;requestFrame();}
+    if(!stopped)requestFrame();
   },100);
   const copy = {
     en: {subtitle:'Visual & product designer',index:'Work',about:'About',view:'View project',drag:'',close:'Close',selected:'Work index',visual:'Visual gallery ↗',intro:'I connect visual expression and product experience.',detail:'Based in Tokyo, my experience at Amazon, RightCapital, and IBM spans Japanese campaigns, B2B products, design systems, and creative collaboration.',approach:'I bring a visual designer’s eye to complex products, and a product designer’s thinking to visual work.',contact:'Say hello ↗',location:'Tokyo, Japan'},
@@ -83,10 +82,10 @@
       card.classList.toggle('is-near',abs < 2.3);
       card.setAttribute('aria-hidden',String(abs >= 2.3));
       const x = delta * stride;
-      const angle = Math.max(-1.35,Math.min(1.35,delta)) * (phone ? -9 : -15);
-      const scale = 1 - Math.min(abs,1.5) * (phone ? .07 : .09);
-      const y = Math.min(abs,1.5) * (phone ? 10 : 20);
-      card.style.transform = `translate(-50%,-50%) translate3d(${x}px,${y}px,${-Math.min(abs,2)*65}px) rotateY(${angle}deg) scale(${scale})`;
+      const angle = 0;
+      const scale = 1 - Math.min(abs,1) * .10;
+      const y = 0;
+      card.style.transform = `translate(-50%,-50%) translate3d(${x}px,${y}px,0px) rotateY(${angle}deg) scale(${scale})`;
       card.style.zIndex = String(10 - Math.round(abs*2));
     });
     updateActive(mod(Math.round(current),count));
@@ -96,12 +95,13 @@
     frame = 0;
     const dt = lastTime ? Math.min(time-lastTime,50) : 16;
     lastTime = time;
-    if (reduced.matches || drag) current = target;
+    if(autoCanMove()){current+=dt/1000*.16;target=current;}
+    else if (reduced.matches || drag) current = target;
     else current += (target-current) * (1-Math.exp(-dt/105));
     if (Math.abs(target-current) < .0005) current = target;
     paint();
     const videoPlaying = surface && surface.ready && [...stage.querySelectorAll("video")].some(video=>!video.paused) && !reduced.matches && !document.querySelector("dialog[open]");
-    if (Math.abs(target-current) > .0005 || videoPlaying || (surface && surface.animating)) requestFrame(); else lastTime = 0;
+    if (autoCanMove() || Math.abs(target-current) > .0005 || videoPlaying || (surface && surface.animating)) requestFrame(); else lastTime = 0;
   }
   function requestFrame() { if (!frame && !document.hidden) frame = requestAnimationFrame(render); }
   function measure() {

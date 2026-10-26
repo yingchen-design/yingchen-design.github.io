@@ -26,14 +26,14 @@ window.CurvedGallery = class CurvedGallery {
       uniform float uLift;
       varying vec2 vUV;
       void main(){
-        float localX=(aUV.x-0.5)*uCard.x*(1.0+uLift*0.018);
-        float worldX=uOffset+localX;
-        float theta=worldX/uRadius;
-        float x=uRadius*sin(theta);
-        float z=uRadius*(cos(theta)-1.0)+localX*uHover.x*0.022+(aUV.y-0.5)*uCard.y*uHover.y*0.018;
+        float localX=(aUV.x-0.5)*uCard.x;
+        float edge=(aUV.x-0.5)*2.0;
+        // Flat at rest. On hover the centre recedes, opposite to the old convex belt.
+        float z=-uLift*(1.0-edge*edge)*uCard.x*0.065;
         float projection=uFocal/(uFocal-z);
-        float y=(aUV.y-0.5)*uCard.y*(1.0+uLift*0.018)+uHover.y*3.0;
-        gl_Position=vec4(x*projection*2.0/uViewport.x,y*projection*2.0/uViewport.y,0.0,1.0);
+        float x=uOffset+localX*projection;
+        float y=(aUV.y-0.5)*uCard.y*projection;
+        gl_Position=vec4(x*2.0/uViewport.x,y*2.0/uViewport.y,0.0,1.0);
         vUV=aUV;
       }`);
     const fragment=shader(gl.FRAGMENT_SHADER,`
@@ -98,8 +98,8 @@ window.CurvedGallery = class CurvedGallery {
     gl.bindBuffer(gl.ARRAY_BUFFER,this.vertices);gl.vertexAttribPointer(this.uv,2,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,this.indices);
     gl.uniform2f(this.uniforms.uViewport,this.w,this.h);
     gl.uniform2f(this.uniforms.uCard,width,this.cards[0].querySelector('.slide-media').clientHeight);
-    // The whole row shares one cylinder, so bends flow through each image rather than tilting flat panels.
-    const radius=this.w*2.5,focal=this.w*.3;
+    // Planar cards drift across the viewport; only the hovered card bends inward.
+    const radius=this.w*2.5,focal=this.w*.7;
     gl.uniform1f(this.uniforms.uRadius,radius);gl.uniform1f(this.uniforms.uFocal,focal);
     this.cards.forEach((card,i)=>{
       const count=this.cards.length,delta=((i-current+count/2)%count+count)%count-count/2;
