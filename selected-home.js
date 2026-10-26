@@ -18,9 +18,36 @@
   const autoButton=document.querySelector('#toggle-autoplay'),autoLabel=document.querySelector('.autoplay-label'),autoBar=document.querySelector('.autoplay-progress i');
   let autoPaused=reduced.matches,autoHover=false;
   const autoCanMove=()=>!autoPaused&&!autoHover&&!reduced.matches&&!document.hidden&&!drag&&!document.documentElement.classList.contains('gallery-boot');
-  function stopAutoplay(){autoPaused=true;}
-  autoButton.addEventListener('click',()=>{autoPaused=!autoPaused;requestFrame();});
-  stage.addEventListener('pointerenter',()=>{autoHover=true;});
+  let nativeMotion=null,nativeStart=0,nativePosition=0;
+  const motionTransform=delta=>{
+    const t=Math.min(Math.abs(delta),1),scale=1-.1*t*t*(3-2*t);
+    return `translate(-50%,-50%) translate3d(${delta*stride}px,0,0) scale(${scale})`;
+  };
+  function syncNativePosition(){
+    if(!nativeMotion)return;
+    current=nativePosition+Math.max(0,document.timeline.currentTime-nativeStart)/1000*.16;target=current;
+    updateActive(mod(Math.round(current),count));
+  }
+  function stopNativeMotion(){
+    if(!nativeMotion)return;syncNativePosition();nativeMotion.forEach(a=>a.cancel());nativeMotion=null;
+    cards.forEach((card,i)=>{card.style.transform=motionTransform(mod(i-current+count/2,count)-count/2);});
+  }
+  function startNativeMotion(){
+    if(nativeMotion||!surface?.presented||surface.animating||!autoCanMove())return;
+    nativePosition=current;nativeStart=document.timeline.currentTime;
+    nativeMotion=cards.map((card,i)=>{
+      const start=mod(i-current+count/2,count)-count/2,boundary=(start+count/2)/count;
+      const points=new Set(Array.from({length:161},(_,n)=>n/160));
+      if(boundary>0&&boundary<1){points.add(Math.max(0,boundary-.000001));points.add(Math.min(1,boundary+.000001));}
+      const frames=[...points].sort((a,b)=>a-b).map(offset=>({offset,transform:motionTransform(mod(start-offset*count+count/2,count)-count/2)}));
+      const animation=card.animate(frames,{duration:count/.16*1000,iterations:Infinity,easing:'linear'});animation.startTime=nativeStart;return animation;
+    });
+    stage.classList.add('is-flat-render');
+  }
+  function stopAutoplay(){autoPaused=true;stopNativeMotion();}
+
+  autoButton.addEventListener('click',()=>{autoPaused=!autoPaused;if(autoPaused)stopNativeMotion();requestFrame();});
+  stage.addEventListener('pointerenter',()=>{autoHover=true;stopNativeMotion();requestFrame();});
   stage.addEventListener('pointerleave',()=>{autoHover=false;requestFrame();});
   stage.addEventListener('pointerdown',stopAutoplay);
   document.querySelector('.gallery').addEventListener('focusin',event=>{if(event.target!==autoButton)stopAutoplay();});
@@ -29,8 +56,8 @@
     autoBar.style.transform=`scaleX(${mod(current,count)/count})`;
     const ja=language==='ja';
     const label=reduced.matches?(ja?'手動切替':'Manual'):stopped?(ja?'一時停止':'Paused'):(ja?'自動再生':'Auto');if(autoLabel.textContent!==label)autoLabel.textContent=label;
-    autoButton.disabled=reduced.matches;position.setAttribute('aria-live',stopped?'polite':'off');autoButton.textContent=autoPaused?'▶':'Ⅱ';autoButton.setAttribute('aria-label',autoPaused?(ja?'自動再生を開始':'Start automatic slideshow'):(ja?'自動再生を一時停止':'Pause automatic slideshow'));
-    if(!stopped)requestFrame();
+    autoButton.disabled=reduced.matches;const live=stopped?'polite':'off';if(position.getAttribute('aria-live')!==live)position.setAttribute('aria-live',live);const icon=autoPaused?'▶':'Ⅱ';if(autoButton.textContent!==icon)autoButton.textContent=icon;autoButton.setAttribute('aria-label',autoPaused?(ja?'自動再生を開始':'Start automatic slideshow'):(ja?'自動再生を一時停止':'Pause automatic slideshow'));
+    if(!stopped){if(nativeMotion)syncNativePosition();else requestFrame();}
   },100);
   const copy = {
     en: {subtitle:'Visual & product designer',index:'Work',about:'About',view:'View project',drag:'',close:'Close',selected:'Work index',visual:'Visual gallery ↗',intro:'I connect visual expression and product experience.',detail:'Based in Tokyo, my experience at Amazon, RightCapital, and IBM spans Japanese campaigns, B2B products, design systems, and creative collaboration.',approach:'I bring a visual designer’s eye to complex products, and a product designer’s thinking to visual work.',contact:'Say hello ↗',location:'Tokyo, Japan'},
@@ -80,19 +107,25 @@
       const delta = mod(i - current + count/2,count) - count/2;
       const abs = Math.abs(delta);
       card.classList.toggle('is-near',abs < 2.3);
-      card.setAttribute('aria-hidden',String(abs >= 2.3));
+      const hidden=String(abs>=2.3);if(card.getAttribute('aria-hidden')!==hidden)card.setAttribute('aria-hidden',hidden);
       const x = delta * stride;
       const angle = 0;
-      const scale = 1 - Math.min(abs,1) * .10;
+      const blend=Math.min(abs,1);
+      const scale=1-.10*blend*blend*(3-2*blend);
       const y = 0;
       card.style.transform = `translate(-50%,-50%) translate3d(${x}px,${y}px,0px) rotateY(${angle}deg) scale(${scale})`;
       card.style.zIndex = String(10 - Math.round(abs*2));
     });
     updateActive(mod(Math.round(current),count));
-    if(surface) surface.draw(current,width,stride);
+    if(surface){
+      const bend=cards.some(card=>card.matches(':hover,:focus-within'))||surface.animating;
+      stage.classList.toggle('is-flat-render',!bend);
+      if(bend||!surface.presented)surface.draw(current,width,stride);
+    }
   }
   function render(time) {
     frame = 0;
+    if(nativeMotion){syncNativePosition();return;}
     const dt = lastTime ? Math.min(time-lastTime,50) : 16;
     lastTime = time;
     if(autoCanMove()){current+=dt/1000*.16;target=current;}
@@ -100,16 +133,19 @@
     else current += (target-current) * (1-Math.exp(-dt/105));
     if (Math.abs(target-current) < .0005) current = target;
     paint();
+    startNativeMotion();
+    if(nativeMotion){lastTime=0;return;}
     const videoPlaying = surface && surface.ready && [...stage.querySelectorAll("video")].some(video=>!video.paused) && !reduced.matches && !document.querySelector("dialog[open]");
     if (autoCanMove() || Math.abs(target-current) > .0005 || videoPlaying || (surface && surface.animating)) requestFrame(); else lastTime = 0;
   }
   function requestFrame() { if (!frame && !document.hidden) frame = requestAnimationFrame(render); }
   function measure() {
+    stopNativeMotion();
     // offsetWidth is unaffected by the card's perspective transform.
     width = cards[0].offsetWidth;
     stride = width + Math.max(innerWidth*.052,24);
     if(surface) surface.resize();
-    paint();
+    paint();requestFrame();
   }
   cards.forEach(card=>card.addEventListener('pointermove',event=>{if(drag)return;const r=card.getBoundingClientRect();card._galleryPointer={x:Math.max(-1,Math.min(1,(event.clientX-r.left)/r.width*2-1)),y:Math.max(-1,Math.min(1,1-(event.clientY-r.top)/r.height*2))};requestFrame();}));
   cards.forEach(card=>['pointerenter','pointerleave','focusin','focusout'].forEach(type=>card.addEventListener(type,requestFrame)));
@@ -185,8 +221,8 @@
     dialog.addEventListener('close',() => {document.body.classList.remove('dialog-open');button.setAttribute('aria-expanded','false');button.focus({preventScroll:true});syncVideo();});
   });
   addEventListener('resize',measure);
-  document.addEventListener('visibilitychange',() => {syncVideo();if (!document.hidden) requestFrame();});
-  reduced.addEventListener('change',() => {target=Math.round(target);requestFrame();syncVideo();});
+  document.addEventListener('visibilitychange',() => {if(document.hidden)stopNativeMotion();syncVideo();if (!document.hidden) requestFrame();});
+  reduced.addEventListener('change',() => {stopNativeMotion();target=Math.round(target);requestFrame();syncVideo();});
   document.body.classList.add('gallery-ready');
   const requestedView = new URLSearchParams(location.search).get('view');
   if (requestedView === 'about') { location.replace('about.html?role='+(new URLSearchParams(location.search).get('role')==='uiux'?'uiux':'design-lead')); return; }

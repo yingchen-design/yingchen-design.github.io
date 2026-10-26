@@ -87,31 +87,36 @@ window.CurvedGallery = class CurvedGallery {
   }
   resize() {
     if(!this.gl||!this.sources||this.cards.some((_,i)=>!this.sources[i]||!this.textures[i]))return;
-    const dpr=Math.min(devicePixelRatio||1,2);this.w=this.stage.clientWidth;this.h=this.stage.clientHeight;
+    const dpr=Math.min(devicePixelRatio||1,2);this.w=this.stage.clientWidth;this.h=this.stage.clientHeight;this.mediaHeight=this.cards[0].querySelector('.slide-media').clientHeight;
     this.canvas.width=Math.round(this.w*dpr);this.canvas.height=Math.round(this.h*dpr);
     this.gl.viewport(0,0,this.canvas.width,this.canvas.height);
-    this.sources.forEach((source,i)=>{this.gl.bindTexture(this.gl.TEXTURE_2D,this.textures[i]);this.gl.texImage2D(this.gl.TEXTURE_2D,0,this.gl.RGBA,this.gl.RGBA,this.gl.UNSIGNED_BYTE,this.compose(i,source));});
+    this.sources.forEach((source,i)=>{
+      const artwork=this.compose(i,source);artwork.className='flat-artwork';artwork.setAttribute('aria-hidden','true');
+      const media=this.cards[i].querySelector('.slide-media');if(!artwork.isConnected)media.prepend(artwork);
+      this.gl.bindTexture(this.gl.TEXTURE_2D,this.textures[i]);this.gl.texImage2D(this.gl.TEXTURE_2D,0,this.gl.RGBA,this.gl.RGBA,this.gl.UNSIGNED_BYTE,artwork);
+    });
   }
   draw(current,width,stride) {
     if(!this.ready)return;
     const gl=this.gl;this.animating=false;gl.clear(gl.COLOR_BUFFER_BIT);gl.useProgram(this.program);
     gl.bindBuffer(gl.ARRAY_BUFFER,this.vertices);gl.vertexAttribPointer(this.uv,2,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,this.indices);
     gl.uniform2f(this.uniforms.uViewport,this.w,this.h);
-    gl.uniform2f(this.uniforms.uCard,width,this.cards[0].querySelector('.slide-media').clientHeight);
+    gl.uniform2f(this.uniforms.uCard,width,this.mediaHeight);
     // Planar cards drift across the viewport; only the hovered card bends inward.
     const radius=this.w*2.5,focal=this.w*.7;
     gl.uniform1f(this.uniforms.uRadius,radius);gl.uniform1f(this.uniforms.uFocal,focal);
     this.cards.forEach((card,i)=>{
       const count=this.cards.length,delta=((i-current+count/2)%count+count)%count-count/2;
       if(Math.abs(delta)>1.65)return;
-      const sideScale=1-Math.min(Math.abs(delta),1)*.10;
-      gl.uniform2f(this.uniforms.uCard,width*sideScale,this.cards[0].querySelector('.slide-media').clientHeight*sideScale);
+      const blend=Math.min(Math.abs(delta),1);
+      const sideScale=1-.10*blend*blend*(3-2*blend);
+      gl.uniform2f(this.uniforms.uCard,width*sideScale,this.mediaHeight*sideScale);
       gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,this.textures[i]);
       const video=card.querySelector('video');
-      if(video && !video.paused && video.readyState>=2 && this.videoFrames[i]!==video.currentTime){
-        this.videoFrames[i]=video.currentTime;
+      if(video && !video.paused && video.readyState>=2 && this.videoFrames[i]!==Math.floor(video.currentTime*30)){
+        this.videoFrames[i]=Math.floor(video.currentTime*30);
         // Video already fills the same Wasabi frame; sample it directly, using the image's cover crop.
-        const videoRatio=video.videoWidth/video.videoHeight,frameRatio=width/this.cards[0].querySelector('.slide-media').clientHeight;
+        const videoRatio=video.videoWidth/video.videoHeight,frameRatio=width/this.mediaHeight;
         if(Math.abs(videoRatio-frameRatio)<.015)gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,video);
         else gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,this.compose(i,video));
       } else if(video && video.paused && this.videoFrames[i]!=null) {

@@ -130,3 +130,13 @@ dialog{width:100%;height:100svh;max-width:none;max-height:none;margin:0;padding:
  .gallery-controls-row #toggle-autoplay{min-height:32px;min-width:32px;padding:4px;font-size:12px;color:#626262}
  .gallery-caption .project-context #project-note{max-width:36ch}
 }
+
+/* Native compositing for planar drift; WebGL is only needed for the hover bend. */
+html.gallery-webgl .gallery-stage.is-flat-render .gallery-slide .slide-media{visibility:visible!important;opacity:1!important}
+.gallery-stage.is-flat-render .curved-gallery-canvas{opacity:0}
+.gallery-stage .curved-gallery-canvas{pointer-events:none}
+
+.flat-artwork{display:block;width:100%;height:100%;object-fit:cover}
+.gallery-stage.is-flat-render .slide-media>img{position:absolute;inset:0;opacity:0}
+.gallery-stage.is-flat-render .advisor-cover .flat-artwork{filter:grayscale(1)}
+.iris.is-active.is-playing video{opacity:1}
