@@ -15,6 +15,24 @@
   const mod = (n, size) => ((n % size) + size) % size;
   let current = 0, target = 0, active = -1, frame = 0, lastTime = 0, drag = null;
   let width = 0, stride = 0, clickBlockedUntil = 0, settleTimer = 0, language = 'en';
+  const autoButton=document.querySelector('#toggle-autoplay'),autoLabel=document.querySelector('.autoplay-label'),autoBar=document.querySelector('.autoplay-progress i');
+  let autoPaused=reduced.matches,autoHover=false,autoElapsed=0,autoLast=performance.now();
+  function stopAutoplay(){autoPaused=true;autoElapsed=0;}
+  autoButton.addEventListener('click',()=>{autoPaused=!autoPaused;autoElapsed=0;autoLast=performance.now();});
+  stage.addEventListener('pointerenter',()=>{autoHover=true;});
+  stage.addEventListener('pointerleave',()=>{autoHover=false;autoLast=performance.now();});
+  stage.addEventListener('pointerdown',stopAutoplay);
+  document.querySelector('.gallery').addEventListener('focusin',event=>{if(event.target!==autoButton)stopAutoplay();});
+  const autoTimer=setInterval(()=>{
+    const now=performance.now(),dt=Math.min(now-autoLast,200);autoLast=now;
+    const stopped=autoPaused||autoHover||reduced.matches||document.hidden||!!drag||document.documentElement.classList.contains('gallery-boot');
+    if(!stopped)autoElapsed+=dt;
+    autoBar.style.transform=`scaleX(${Math.min(1,autoElapsed/6500)})`;
+    const ja=language==='ja';
+    const label=reduced.matches?(ja?'手動切替':'Manual'):stopped?(ja?'一時停止':'Paused'):(ja?'自動再生':'Auto');if(autoLabel.textContent!==label)autoLabel.textContent=label;
+    autoButton.disabled=reduced.matches;position.setAttribute('aria-live',stopped?'polite':'off');autoButton.textContent=autoPaused?'▶':'Ⅱ';autoButton.setAttribute('aria-label',autoPaused?(ja?'自動再生を開始':'Start automatic slideshow'):(ja?'自動再生を一時停止':'Pause automatic slideshow'));
+    if(autoElapsed>=6500){autoElapsed=0;target=Math.round(target)+1;requestFrame();}
+  },100);
   const copy = {
     en: {subtitle:'Visual & product designer',index:'Work',about:'About',view:'View project',drag:'',close:'Close',selected:'Work index',visual:'Visual gallery ↗',intro:'I connect visual expression and product experience.',detail:'Based in Tokyo, my experience at Amazon, RightCapital, and IBM spans Japanese campaigns, B2B products, design systems, and creative collaboration.',approach:'I bring a visual designer’s eye to complex products, and a product designer’s thinking to visual work.',contact:'Say hello ↗',location:'Tokyo, Japan'},
     ja: {subtitle:'ビジュアル・プロダクトデザイナー',index:'作品一覧',about:'プロフィール',view:'プロジェクトを見る',drag:'',close:'閉じる',selected:'作品一覧',visual:'ビジュアル作品 ↗',intro:'ビジュアル表現とプロダクト体験をつなぎます。',detail:'東京を拠点に活動しています。Amazon、RightCapital、IBMで、日本向けキャンペーン、B2Bプロダクト、デザインシステム、クリエイティブの協業に取り組んできました。',approach:'複雑なプロダクトにはビジュアルデザイナーの視点を。ビジュアルの仕事にはプロダクトデザイナーの思考を。',contact:'お問い合わせ ↗',location:'東京、日本'}
@@ -94,12 +112,12 @@
   }
   cards.forEach(card=>card.addEventListener('pointermove',event=>{if(drag)return;const r=card.getBoundingClientRect();card._galleryPointer={x:Math.max(-1,Math.min(1,(event.clientX-r.left)/r.width*2-1)),y:Math.max(-1,Math.min(1,1-(event.clientY-r.top)/r.height*2))};requestFrame();}));
   cards.forEach(card=>['pointerenter','pointerleave','focusin','focusout'].forEach(type=>card.addEventListener(type,requestFrame)));
-  function step(direction) { target = Math.round(target) + direction; requestFrame(); }
+  function step(direction) { stopAutoplay(); target = Math.round(target) + direction; requestFrame(); }
   document.querySelector('#previous-project').addEventListener('click',() => step(-1));
   document.querySelector('#next-project').addEventListener('click',() => step(1));
   stage.addEventListener('keydown',event => {
     if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') { event.preventDefault(); step(event.key === 'ArrowRight' ? 1 : -1); }
-    if (event.key === 'Home' || event.key === 'End') { event.preventDefault(); target = Math.round(target/count)*count + (event.key === 'Home' ? 0 : count-1);requestFrame(); }
+    if (event.key === 'Home' || event.key === 'End') { stopAutoplay(); event.preventDefault(); target = Math.round(target/count)*count + (event.key === 'Home' ? 0 : count-1);requestFrame(); }
   });
   stage.addEventListener('pointerdown',event => {
     if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return;
