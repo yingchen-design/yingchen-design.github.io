@@ -62,3 +62,15 @@ html[lang=ja] .portfolio-page :where(h1,h2,h3,h4,h5,h6,p,span,div,section,articl
 body.portfolio-case [data-text-pending]{opacity:0}
 @media print{body.portfolio-case [data-text-pending]{opacity:1!important;transform:none!important}}
 @media(prefers-reduced-motion:reduce){body.portfolio-case [data-text-pending]{opacity:1!important;transform:none!important}}
+
+/* One shared outer content edge for navigation, profile and case studies. */
+@media screen{
+ :root{--site-edge:max(32px,calc((100vw - 1320px)/2))}
+ body.portfolio-page{--pf-edge:var(--site-edge);--case-edge:var(--site-edge);--edge:var(--site-edge)}
+ body.portfolio-page :is(.unified-nav,.home-header){padding-inline:var(--site-edge)!important}
+ body.resume-page main{max-width:none;padding-inline:var(--site-edge)!important}
+ body.portfolio-case :is(.case-hero,.case-brief,.case-section,.mde-art-opening,.iris-opening,.next-case){max-width:none!important;width:auto;padding-inline:var(--site-edge)!important;margin-inline:0!important}
+ .gallery-caption{left:var(--site-edge);right:var(--site-edge)}
+ .mobile-projects{padding-inline:var(--site-edge)}
+}
+@media screen and (max-width:760px){:root{--site-edge:20px}}
