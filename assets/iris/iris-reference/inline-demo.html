@@ -1,0 +1,3730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RightCapital - Retirement Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roobert RC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F9F8F7;
+            color: #1a1a1a;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            height: 60px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #4966D0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logo::after {
+            content: '📈';
+            font-size: 24px;
+        }
+
+        .client-info {
+            font-size: 13px;
+            color: #6c757d;
+        }
+
+        .client-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .top-nav {
+            display: flex;
+            gap: 32px;
+        }
+
+        .top-nav a {
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .top-nav a:hover {
+            color: #333;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            width: auto;
+            height: auto;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #bbb;
+            font-size: 18px;
+            transition: color 0.2s;
+            padding: 0;
+        }
+
+        .icon-btn:hover {
+            color: #666;
+        }
+
+        .icon-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .ai-icon-btn {
+            background: #4966D0;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 20px;
+            border: none;
+            outline: none;
+        }
+
+        .ai-icon-btn:hover {
+            background: #3B52B8;
+        }
+
+        .sub-nav {
+            background: #f8f9fa;
+            padding: 0 40px;
+            display: flex;
+            gap: 32px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .sub-nav a {
+            padding: 12px 0;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .sub-nav a.active {
+            color: #4966D0;
+            border-bottom-color: #4966D0;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 40px;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .info-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #adb5bd;
+            color: #adb5bd;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: help;
+        }
+
+        .description {
+            color: #6c757d;
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 900px;
+            margin-bottom: 32px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 0;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            color: #6c757d;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            color: #333;
+            border-bottom-color: #4966D0;
+        }
+
+        /* Comparison Section */
+        .comparison-container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .plan-section {
+            text-align: center;
+        }
+
+        .plan-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .plan-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .edit-icon {
+            color: #6c757d;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .chart-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+        }
+
+        /* Circular Progress */
+        .circular-progress {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .circular-progress svg {
+            transform: rotate(-90deg);
+        }
+
+        .circular-progress circle {
+            fill: none;
+        }
+
+        .circular-progress .bg-circle {
+            stroke: #dfe3e8;
+            stroke-width: 16;
+            opacity: 1;
+        }
+
+        .circular-progress .progress-circle {
+            stroke-width: 16;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .progress-percentage {
+            font-size: 48px;
+            font-weight: 700;
+            color: #333;
+            line-height: 1;
+        }
+
+        .progress-label {
+            font-size: 13px;
+            color: #6c757d;
+            margin-top: 8px;
+        }
+
+        /* Vertical Bar Chart */
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            height: 200px;
+            width: 200px;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .bar-chart-grid {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .grid-line {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #f1f3f5;
+            position: relative;
+        }
+
+        .grid-line:last-child {
+            border-top: 2px solid #dee2e6;
+        }
+
+        .grid-label {
+            font-size: 11px;
+            color: #adb5bd;
+            width: 45px;
+            text-align: right;
+            margin-right: 8px;
+        }
+
+        .bar-container {
+            display: flex;
+            gap: 8px;
+            height: 100%;
+            align-items: flex-end;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            margin-left: 53px;
+        }
+
+        .bar-column {
+            width: 120px;
+            background: linear-gradient(180deg, #5cb89a 0%, #4a9b82 100%);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bar-value {
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .action-items-btn {
+            background: #4966D0;
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0 auto;
+            display: block;
+            transition: background 0.2s;
+        }
+
+        .action-items-btn:hover {
+            background: #3B52B8;
+        }
+
+        /* Floating Action Items Button */
+        .floating-action-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4966D0;
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(73, 102, 208, 0.3);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .floating-action-btn:hover {
+            background: #3B52B8;
+            box-shadow: 0 6px 16px rgba(73, 102, 208, 0.4);
+            transform: translateX(-50%) translateY(-2px);
+        }
+
+        .future-dollars {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: #6c757d;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* AI Assistant Panel */
+        .ai-panel {
+            position: fixed;
+            right: -440px;
+            top: 0;
+            width: 440px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+            transition: right 0.4s cubic-bezier(0.4, 0.0, 0.2, 1),
+                        width 0.4s cubic-bezier(0.4, 0.0, 0.2, 1),
+                        box-shadow 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ai-panel.open {
+            right: 0;
+        }
+
+        .ai-panel.open.pushed {
+            right: 600px;
+        }
+
+        .ai-panel.fullscreen {
+            width: 100vw;
+            height: 100vh;
+            right: -100vw;
+            box-shadow: none;
+        }
+
+        .ai-panel.fullscreen.open {
+            right: 0;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+        }
+
+        .ai-panel.fullscreen.open.pushed {
+            right: 0;
+        }
+
+        .ai-header {
+            padding: 16px 20px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .ai-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ai-title-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .ai-title-main {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .ai-title-sub {
+            font-size: 12px;
+            font-weight: 400;
+            color: #999;
+        }
+
+        .ai-icon {
+            width: 32px;
+            height: 32px;
+            background: #4966D0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .ai-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Suggestions */
+        .suggestions-section {
+            padding: 20px;
+            flex-shrink: 0;
+        }
+
+        .suggestions-header {
+            font-size: 11px;
+            font-weight: 600;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 12px;
+        }
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #1D9E75;
+        }
+
+        .status-text {
+            font-size: 11px;
+            color: #0F6E56;
+            font-weight: 500;
+        }
+
+        .status-menu {
+            color: #bbb;
+            cursor: pointer;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .status-menu:hover {
+            color: #666;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 24px;
+            right: 0;
+            background: white;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 4px 0;
+            min-width: 140px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 8px 16px;
+            font-size: 13px;
+            color: #333;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f8f6;
+        }
+
+        /* Data Access Toggle */
+        .data-access-section {
+            margin-bottom: 16px;
+        }
+
+        .connector {
+            background: #f8f8f6;
+            border-radius: 10px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .connector-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .connector-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: #E6F1FB;
+        }
+
+        .connector-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+
+        .connector-desc {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .toggle {
+            width: 40px;
+            height: 22px;
+            border-radius: 11px;
+            background: #ddd;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .toggle.on {
+            background: #1D9E75;
+        }
+
+        .toggle .knob {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: left 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        .toggle.on .knob {
+            left: 20px;
+        }
+
+        /* Confirmation Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        .modal-text {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-btn.cancel {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .modal-btn.cancel:hover {
+            background: #e0e0e0;
+        }
+
+        .modal-btn.confirm {
+            background: #4966D0;
+            color: white;
+        }
+
+        .modal-btn.confirm:hover {
+            background: #3B52B8;
+        }
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.15s;
+            margin-bottom: 4px;
+        }
+
+        .suggestion-item:hover {
+            background: #f8f8f6;
+        }
+
+        .suggestion-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .suggestion-icon.blue {
+            background: #E6F1FB;
+        }
+
+        .suggestion-icon.amber {
+            background: #FAEEDA;
+        }
+
+        .suggestion-icon.teal {
+            background: #E1F5EE;
+        }
+
+        .suggestion-icon.purple {
+            background: #EEEDFE;
+        }
+
+        .suggestion-text {
+            font-size: 13px;
+            font-weight: 500;
+            color: #1a1a1a;
+            flex: 1;
+        }
+
+        .suggestion-arrow {
+            color: #ccc;
+            flex-shrink: 0;
+        }
+
+        /* Chat Area */
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            min-height: 0;
+            transition: padding 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .ai-panel-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .fullscreen .ai-panel-main {
+            grid-column: 2;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            max-width: none;
+        }
+
+        .fullscreen .chat-area {
+            overflow-y: auto;
+            max-width: none;
+            padding: 20px 60px;
+        }
+
+        .fullscreen .message-content {
+            max-width: 100%;
+        }
+
+        .fullscreen .snapshot {
+            max-width: 800px;
+        }
+
+        .fullscreen .plan-card {
+            max-width: 600px;
+        }
+
+        .fullscreen .prob-card {
+            max-width: 500px;
+        }
+
+        .fullscreen .metric-grid {
+            max-width: 800px;
+        }
+
+        .fullscreen .findings {
+            max-width: 900px;
+        }
+
+        .fullscreen .actions-box {
+            max-width: 900px;
+        }
+
+        .fullscreen .issue-card {
+            max-width: 900px;
+        }
+
+        .chat-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .chat-tab {
+            padding: 6px 12px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 16px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chat-tab.active {
+            background: #333;
+            color: white;
+        }
+
+        .message-group {
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message-group.user {
+            align-items: flex-end;
+        }
+
+        .message-group.assistant {
+            align-items: flex-start;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .message-group.user .message-header {
+            justify-content: flex-end;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #4966D0;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .avatar svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .sender-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #6c757d;
+        }
+
+        .message-content {
+            color: #495057;
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 85%;
+        }
+
+        .message-group.user .message-content {
+            background: #4966D0;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 16px 16px 4px 16px;
+            max-width: 70%;
+        }
+
+        .message-group.assistant .message-content {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 16px 16px 16px 4px;
+            max-width: 100%;
+        }
+
+        .message-group.assistant .message-content > p:first-child {
+            margin-top: 0;
+        }
+
+        .message-group.assistant .message-content > p {
+            margin-bottom: 12px;
+        }
+
+        /* Data Grid */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .data-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        .data-label {
+            font-size: 11px;
+            color: #6c757d;
+            margin-bottom: 4px;
+        }
+
+        .data-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Projection Box */
+        .projection-box {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .projection-circle {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+
+        .projection-info {
+            flex: 1;
+        }
+
+        .projection-label {
+            font-size: 11px;
+            color: #6c757d;
+            margin-bottom: 4px;
+        }
+
+        .projection-change {
+            font-size: 14px;
+            font-weight: 600;
+            color: #10b981;
+        }
+
+        /* Recommendations */
+        .recommendations-list {
+            margin-top: 16px;
+        }
+
+        .recommendation-item {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+
+        .recommendation-item.enabled {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .rec-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .rec-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+        }
+
+        .rec-impact {
+            font-size: 13px;
+            font-weight: 600;
+            color: #10b981;
+            margin-left: 8px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: #cbd5e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch.active {
+            background: #10b981;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: left 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch.active::after {
+            left: 22px;
+        }
+
+        .rec-description {
+            font-size: 13px;
+            color: #6c757d;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .show-details-btn {
+            background: none;
+            border: none;
+            color: #3B52B8;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 0;
+            text-decoration: underline;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid #e9ecef;
+            background: white;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #f8f9fa;
+        }
+
+        .approve-section {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .disapprove-btn {
+            flex: 1;
+            padding: 14px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6c757d;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .disapprove-btn:hover {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+        .approve-btn {
+            flex: 2;
+            padding: 14px;
+            background: #10b981;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .approve-btn:hover {
+            background: #059669;
+        }
+
+        .approve-btn:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+        }
+
+        /* Chat Input */
+        .chat-input {
+            padding: 0 20px 16px;
+            flex-shrink: 0;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e8e8e8;
+            border-radius: 20px;
+            padding: 10px 16px;
+            flex: 1;
+            transition: border-color 0.15s;
+            gap: 8px;
+        }
+
+        .input-box:hover {
+            border-color: #ccc;
+        }
+
+        .input-wrapper input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 13px;
+            background: transparent;
+        }
+
+        .input-wrapper input::placeholder {
+            color: #bbb;
+        }
+
+        .send-icon {
+            color: #bbb;
+            flex-shrink: 0;
+        }
+
+        .attach-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid #e8e8e8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: border-color 0.15s, background 0.15s;
+        }
+
+        .attach-btn:hover {
+            border-color: #ccc;
+            background: #f8f8f6;
+        }
+
+        /* Sidebar (fullscreen only) */
+        .conversation-sidebar {
+            display: none;
+            border-right: 1px solid #e9ecef;
+            padding: 24px 16px;
+            overflow-y: auto;
+            background: #fafafa;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.4s cubic-bezier(0.4, 0.0, 0.2, 1) 0.1s,
+                        transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1) 0.1s;
+        }
+
+        .fullscreen .conversation-sidebar {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .sidebar-title {
+            font-size: 12px;
+            color: #6c757d;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .conversation-item {
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #495057;
+            cursor: pointer;
+            margin-bottom: 4px;
+            transition: background 0.2s;
+            opacity: 0;
+            animation: fadeInItem 0.3s ease forwards;
+        }
+
+        .conversation-item:nth-child(2) { animation-delay: 0.15s; }
+        .conversation-item:nth-child(3) { animation-delay: 0.2s; }
+        .conversation-item:nth-child(4) { animation-delay: 0.25s; }
+        .conversation-item:nth-child(5) { animation-delay: 0.3s; }
+
+        @keyframes fadeInItem {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .conversation-item.active {
+            background: #eef2ff;
+            color: #4966D0;
+        }
+
+        .conversation-item:hover {
+            background: #f8f9fa;
+        }
+
+
+        /* Profile Issues Styles */
+        .intro-text {
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            color: #495057;
+        }
+
+        .category-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #adb5bd;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 24px 0 12px 0;
+        }
+
+        .issue-card {
+            background: #fff;
+            border: 0.5px solid rgba(0,0,0,0.12);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+        }
+
+        .issue-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .issue-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 8px;
+        }
+
+        .badge-high {
+            background: #F09595;
+            color: #791F1F;
+        }
+
+        .badge-medium {
+            background: #FAC775;
+            color: #633806;
+        }
+
+        .badge-low {
+            background: #B5D4F4;
+            color: #0C447C;
+        }
+
+        .issue-description {
+            font-size: 13px;
+            color: #6c757d;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .issue-description strong {
+            color: #333;
+        }
+
+        .mini-cards {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .mini-card {
+            cursor: pointer;
+            width: 148px;
+            border-radius: 6px;
+            border: 0.5px solid rgba(0,0,0,0.12);
+            overflow: hidden;
+            background: #fff;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .mini-card:hover {
+            border-color: rgba(0,0,0,0.25);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .mini-card-header {
+            background: #5c4c64;
+            padding: 5px 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .mini-card-header svg {
+            flex-shrink: 0;
+        }
+
+        .mini-card-label {
+            color: #fff;
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .mini-card-body {
+            padding: 6px 8px;
+        }
+
+        .mini-card-name {
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 2px;
+            color: #333;
+        }
+
+        .mini-card-value {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .issues-footer {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 20px;
+        }
+
+        .issues-footer p {
+            font-size: 13px;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        .footer-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .footer-btn {
+            font-size: 13px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 0.5px solid rgba(0,0,0,0.2);
+            background: white;
+            cursor: pointer;
+            color: #333;
+            transition: background 0.15s;
+        }
+
+        .footer-btn:hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        /* AI Thinking Animation */
+        .thinking-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .thinking-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .thinking-dot {
+            width: 8px;
+            height: 8px;
+            background: #4966D0;
+            border-radius: 50%;
+            animation: thinking-bounce 1.4s infinite ease-in-out both;
+        }
+
+        .thinking-dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .thinking-dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes thinking-bounce {
+            0%, 80%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* Fade-in Animation for content */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-item {
+            opacity: 0;
+            animation: fadeInUp 0.4s ease forwards;
+        }
+
+        .chat-area {
+            scroll-behavior: smooth;
+        }
+
+        /* New Plan Styles */
+        .snapshot {
+            background: #f7f7f5;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+        }
+
+        .snapshot-label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .snapshot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .snapshot-item-label {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .snapshot-item-value {
+            font-size: 18px;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-top: 2px;
+        }
+
+        .sub-intro {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .plan-card {
+            border: 0.5px solid rgba(0,0,0,0.12);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            background: #fff;
+        }
+
+        .plan-card.recommended {
+            border: 2px solid #378ADD;
+            position: relative;
+        }
+
+        .recommended-badge {
+            position: absolute;
+            top: -9px;
+            right: 16px;
+            background: #E6F1FB;
+            color: #0C447C;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 2px 10px;
+            border-radius: 8px;
+        }
+
+        .plan-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .plan-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .plan-tag {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 8px;
+        }
+
+        .plan-tag.a {
+            background: #E1F5EE;
+            color: #085041;
+        }
+
+        .plan-tag.b {
+            background: #E6F1FB;
+            color: #0C447C;
+        }
+
+        .plan-tag.c {
+            background: #EEEDFE;
+            color: #3C3489;
+        }
+
+        .plan-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+
+        .plan-result {
+            font-size: 14px;
+            font-weight: 500;
+            color: #0F6E56;
+        }
+
+        .progress-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .progress-track {
+            flex: 1;
+            height: 6px;
+            background: #f0f0ee;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill-before {
+            height: 100%;
+            background: #B4B2A9;
+            border-radius: 3px;
+        }
+
+        .progress-fill-after {
+            height: 100%;
+            background: #1D9E75;
+            border-radius: 3px;
+        }
+
+        .plan-steps {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .plan-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .plan-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-num {
+            color: #999;
+            flex-shrink: 0;
+        }
+
+        .step-text strong {
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .btn {
+            flex: 1;
+            font-size: 13px;
+            padding: 10px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            text-align: center;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 0.5px solid rgba(0,0,0,0.2);
+            color: #1a1a1a;
+        }
+
+        .btn-outline:hover {
+            background: #f7f7f5;
+        }
+
+        .btn-disapprove {
+            background: transparent;
+            border: 0.5px solid rgba(0,0,0,0.3);
+            color: #1a1a1a;
+        }
+
+        .btn-approve {
+            background: #1D9E75;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-approve:hover {
+            background: #0F6E56;
+        }
+
+        /* Plan Summary Styles */
+        .ai-text {
+            font-size: 13px;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .ai-text b {
+            font-weight: 600;
+        }
+
+        .prob-card {
+            background: #f0fdf4;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            margin-bottom: 12px;
+            border: 0.5px solid #d1fae5;
+        }
+
+        .prob-label {
+            font-size: 11px;
+            color: #15803d;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .prob-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #16a34a;
+            line-height: 1.15;
+        }
+
+        .prob-sub {
+            font-size: 11px;
+            color: #6ee7b7;
+            margin-top: 2px;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .metric-card {
+            background: #f8f8fb;
+            border-radius: 10px;
+            padding: 11px 13px;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 2px;
+        }
+
+        .metric-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .metric-sub {
+            font-size: 11px;
+            color: #aaa;
+        }
+
+        .section-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: #bbb;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .findings {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .finding-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: #fff;
+            border: 0.5px solid #efefef;
+            border-radius: 10px;
+            padding: 10px 12px;
+            transition: border-color 0.15s;
+            cursor: default;
+        }
+
+        .finding-item:hover {
+            border-color: #d0d0e0;
+        }
+
+        .finding-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+
+        .finding-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 1px;
+        }
+
+        .finding-desc {
+            font-size: 11px;
+            color: #888;
+            line-height: 1.45;
+        }
+
+        .actions-box {
+            background: #fafaff;
+            border: 0.5px solid #e8e8f0;
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            font-size: 12px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .action-row + .action-row {
+            margin-top: 7px;
+        }
+
+        .action-badge {
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 4px;
+            padding: 1px 6px;
+            flex-shrink: 0;
+            line-height: 1.6;
+        }
+
+        .badge-red {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .badge-amber {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .badge-gray {
+            background: #f0f0f5;
+            color: #666;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .chip {
+            font-size: 11px;
+            color: #2E3F9A;
+            background: #F4F6FF;
+            border: 0.5px solid #CDD5FF;
+            border-radius: 18px;
+            padding: 5px 13px;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .chip:hover {
+            background: #E6EAFF;
+            border-color: #A5B4FF;
+        }
+
+        /* Edit Drawer Styles */
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1002;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .drawer-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .edit-drawer {
+            position: fixed;
+            right: -600px;
+            top: 0;
+            width: 600px;
+            height: 100vh;
+            background: white;
+            box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+            transition: right 0.3s ease;
+            z-index: 1003;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .edit-drawer.open {
+            right: 0;
+        }
+
+        .drawer-header-bar {
+            background: #5c4c64;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .drawer-header-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        #drawerIcon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #drawerIcon svg {
+            display: block;
+        }
+
+        .drawer-close-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .drawer-close-btn:hover {
+            opacity: 0.8;
+        }
+
+        .drawer-content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+            background: white;
+        }
+
+        .drawer-form {
+            max-width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 400;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+            background: white;
+            color: #1a1a1a;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4966D0;
+        }
+
+        .form-input:read-only {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            margin-bottom: 32px;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .checkbox-label {
+            font-size: 14px;
+            color: #1a1a1a;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-col-header {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+
+        .drawer-footer {
+            border-top: 1px solid #e5e7eb;
+            padding: 20px 40px;
+            flex-shrink: 0;
+            background: white;
+        }
+
+        .notes-section {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #9ca3af;
+            font-size: 14px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .notes-section:hover {
+            color: #6b7280;
+        }
+
+        .drawer-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .drawer-btn {
+            padding: 10px 28px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .drawer-btn.cancel {
+            background: #9ca3af;
+            color: white;
+        }
+
+        .drawer-btn.cancel:hover {
+            background: #6b7280;
+        }
+
+        .drawer-btn.save {
+            background: #4966D0;
+            color: white;
+        }
+
+        .drawer-btn.save:hover {
+            background: #3B52B8;
+        }
+
+    </style>
+<style>.sub-nav > a:nth-child(2),.sub-nav > a:nth-child(3),.sub-nav > a:nth-child(4),.sub-nav > a:nth-child(5),p,.tab:nth-child(2),.tab:nth-child(3),.tab:nth-child(4),.tab:nth-child(5),.plan-section:nth-child(1) > .chart-container > .bar-chart > .bar-chart-grid > .grid-line:nth-child(1) > .grid-label,.plan-section:nth-child(1) > .chart-container > .bar-chart > .bar-chart-grid > .grid-line:nth-child(2) > .grid-label,.plan-section:nth-child(1) > .chart-container > .bar-chart > .bar-chart-grid > .grid-line:nth-child(3) > .grid-label,.plan-section:nth-child(1) > .chart-container > .bar-chart > .bar-chart-grid > .grid-line:nth-child(4) > .grid-label,.plan-section:nth-child(1) > .chart-container > .bar-chart > .bar-chart-grid > .grid-line:nth-child(5) > .grid-label,.plan-section:nth-child(2) > .chart-container > .bar-chart > .bar-chart-grid > .grid-line:nth-child(1) > .grid-label,.plan-section:nth-child(2) > .chart-container > .bar-chart > .bar-chart-grid > .grid-line:nth-child(2) > .grid-label,.plan-section:nth-child(2) > .chart-container > .bar-chart > .bar-chart-grid > .grid-line:nth-child(3) > .grid-label,.plan-section:nth-child(2) > .chart-container > .bar-chart > .bar-chart-grid > .grid-line:nth-child(4) > .grid-label,.plan-section:nth-child(2) > .chart-container > .bar-chart > .bar-chart-grid > .grid-line:nth-child(5) > .grid-label,.grid-line:nth-child(6) > .grid-label,.ai-title-sub,#dataAccessSection > .suggestions-header,.connector-desc,#suggestionsSection > .suggestions-header,input[value="Retirement Age"],.notes-section > span,.drawer-btn.cancel[onclick="closeDrawer()"]{color:#4f565d!important}
+#approveBtn{background:#187052!important;color:white!important}
+:where(button,a,input,[tabindex]):focus-visible{outline:2px solid #2145b0;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}</style><link rel="stylesheet" href="../../../iris-inline-demo.css?v=1"></head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="logo-section">
+                <div class="logo">RightCapital</div>
+                <div class="client-info">
+                    <span class="client-name">Millennial Sample</span><br>
+                    Mike Sample
+                </div>
+            </div>
+            <nav class="top-nav">
+                <a href="#">Dashboard</a>
+                <a href="#">Investment</a>
+                <a href="#" style="color: #333;">Retirement</a>
+                <a href="#">Insurance</a>
+                <a href="#">Education</a>
+                <a href="#">Tax</a>
+                <a href="#">Estate</a>
+                <a href="#">Profile</a>
+            </nav>
+            <div class="header-actions">
+                <button class="icon-btn">⋯</button>
+                <button class="icon-btn">📁</button>
+                <button class="icon-btn">⚙️</button>
+                <button class="ai-icon-btn" onclick="toggleAI()">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 1l1.8 4.2L14 7l-4.2 1.8L8 13l-1.8-4.2L2 7l4.2-1.8z" fill="white"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <nav class="sub-nav">
+            <a href="#" class="active">Analysis</a>
+            <a href="#">Stress Test</a>
+            <a href="#">Social Security</a>
+            <a href="#">Medicare</a>
+            <a href="#">Cash Flows</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Retirement Analysis</h1>
+            <span class="info-icon">?</span>
+        </div>
+
+        <p class="description">
+            Use of a detailed retirement analysis tool is important to help determine whether you are on track for a successful retirement. Monte Carlo simulations, stress tests, and viewing specific scenarios can help you evaluate your retirement plans and see the impact of potential changes.
+        </p>
+
+        <div class="tabs">
+            <button class="tab active">Probability</button>
+            <button class="tab">Confidence</button>
+            <button class="tab">Comparisons</button>
+            <button class="tab">Savings</button>
+            <button class="tab">Retirement Details</button>
+        </div>
+
+        <div class="comparison-container">
+            <div class="plans-grid">
+                <!-- Proposed Plan -->
+                <div class="plan-section">
+                    <div class="plan-header">
+                        <h2 class="plan-title">Proposed Plan</h2>
+                    </div>
+                    <div class="chart-container">
+                        <div class="circular-progress">
+                            <svg width="200" height="200">
+                                <defs>
+                                    <linearGradient id="gradientProposed" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#4c6ef5;stop-opacity:1" />
+                                        <stop offset="50%" style="stop-color:#5cb89a;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <circle class="bg-circle" cx="100" cy="100" r="84"></circle>
+                                <circle class="progress-circle" cx="100" cy="100" r="84"
+                                        stroke-dasharray="527.79"
+                                        stroke-dashoffset="131.95"
+                                        stroke="url(#gradientProposed)"
+                                        id="proposedCircle"></circle>
+                            </svg>
+                            <div class="progress-text">
+                                <div class="progress-percentage" id="proposedPercent">75%</div>
+                                <div class="progress-label">Probability of<br>success</div>
+                            </div>
+                        </div>
+                        <div class="bar-chart">
+                            <div class="bar-chart-grid">
+                                <div class="grid-line">
+                                    <div class="grid-label">$40mm</div>
+                                </div>
+                                <div class="grid-line">
+                                    <div class="grid-label">$30mm</div>
+                                </div>
+                                <div class="grid-line">
+                                    <div class="grid-label">$20mm</div>
+                                </div>
+                                <div class="grid-line">
+                                    <div class="grid-label">$10mm</div>
+                                </div>
+                                <div class="grid-line">
+                                    <div class="grid-label">$0</div>
+                                </div>
+                            </div>
+                            <div class="bar-container">
+                                <div class="bar-column" style="height: 0%" data-target="80%">
+                                    <span class="bar-value">32,072,891</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current Plan -->
+                <div class="plan-section">
+                    <div class="plan-header">
+                        <h2 class="plan-title">Current Plan</h2>
+                        <span class="edit-icon">✏️</span>
+                    </div>
+                    <div class="chart-container">
+                        <div class="circular-progress">
+                            <svg width="200" height="200">
+                                <defs>
+                                    <linearGradient id="gradientCurrent" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#4c6ef5;stop-opacity:1" />
+                                        <stop offset="50%" style="stop-color:#5cb89a;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <circle class="bg-circle" cx="100" cy="100" r="84"></circle>
+                                <circle class="progress-circle" cx="100" cy="100" r="84"
+                                        stroke-dasharray="527.79"
+                                        stroke-dashoffset="131.95"
+                                        stroke="url(#gradientCurrent)"></circle>
+                            </svg>
+                            <div class="progress-text">
+                                <div class="progress-percentage">75%</div>
+                                <div class="progress-label">Probability of<br>success</div>
+                            </div>
+                        </div>
+                        <div class="bar-chart">
+                            <div class="bar-chart-grid">
+                                <div class="grid-line">
+                                    <div class="grid-label">$25mm</div>
+                                </div>
+                                <div class="grid-line">
+                                    <div class="grid-label">$20mm</div>
+                                </div>
+                                <div class="grid-line">
+                                    <div class="grid-label">$15mm</div>
+                                </div>
+                                <div class="grid-line">
+                                    <div class="grid-label">$10mm</div>
+                                </div>
+                                <div class="grid-line">
+                                    <div class="grid-label">$5mm</div>
+                                </div>
+                                <div class="grid-line">
+                                    <div class="grid-label">$0</div>
+                                </div>
+                            </div>
+                            <div class="bar-container">
+                                <div class="bar-column" style="height: 0%" data-target="77%">
+                                    <span class="bar-value">19,220,215</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="future-dollars">Future dollars ⚙️</div>
+        </div>
+    </main>
+
+    <!-- AI Assistant Panel -->
+    <div class="ai-panel" id="aiPanel">
+        <!-- Conversation Sidebar (only in fullscreen) -->
+        <div class="conversation-sidebar">
+            <div class="sidebar-title">Conversation history</div>
+            <div class="conversation-item active">Retirement optimization</div>
+            <div class="conversation-item">Profile review - Mar 15</div>
+            <div class="conversation-item">Tax planning - Mar 10</div>
+            <div class="conversation-item">Cash flow analysis - Mar 5</div>
+        </div>
+
+        <!-- Main Chat Area -->
+        <div class="ai-panel-main">
+            <div class="ai-header">
+                <div class="ai-title">
+                    <div class="ai-icon">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 1l1.8 4.2L14 7l-4.2 1.8L8 13l-1.8-4.2L2 7l4.2-1.8z" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="ai-title-text">
+                        <div class="ai-title-main">AIRIS</div>
+                        <div class="ai-title-sub">AI-powered assistant</div>
+                    </div>
+                </div>
+                <div class="ai-actions">
+                    <button class="icon-btn" onclick="newChat()" title="New chat">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" onclick="toggleFullscreen()">⛶</button>
+                    <button class="icon-btn" onclick="toggleAI()">✕</button>
+                </div>
+            </div>
+
+            <div class="suggestions-section" id="suggestionsSection">
+                <!-- Data Access Section -->
+                <div class="data-access-section" id="dataAccessSection">
+                    <div class="suggestions-header">Data access</div>
+                    <div class="connector" id="dataAccessToggle">
+                        <div class="connector-left">
+                            <div class="connector-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="connector-name">Client data</div>
+                                <div class="connector-desc">Profile, accounts & goals</div>
+                            </div>
+                        </div>
+                        <div class="toggle" id="clientDataToggle" onclick="toggleDataAccess()">
+                            <div class="knob"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Bar (shown after authorization) -->
+                <div class="status-bar" id="statusBar" style="display: none;">
+                    <div class="suggestions-header" style="margin-bottom: 0;">Data access</div>
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span class="status-text">Client data connected</span>
+                        <div class="status-menu" onclick="toggleDropdown(event)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="5" r="1"/>
+                                <circle cx="12" cy="12" r="1"/>
+                                <circle cx="12" cy="19" r="1"/>
+                            </svg>
+                            <div class="dropdown-menu" id="dataAccessDropdown">
+                                <div class="dropdown-item" onclick="disconnectData(event)">Disconnect</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="suggestions-header">Suggested for retirement page</div>
+
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <div class="suggestion-item" onclick="askQuestion('Summarize this client\'s plan')">
+                        <div class="suggestion-icon blue">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                        </div>
+                        <div class="suggestion-text">Summarize this client's plan</div>
+                        <svg class="suggestion-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </div>
+                    <div class="suggestion-item" onclick="askQuestion('Are there any profile issues?')">
+                        <div class="suggestion-icon amber">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#854F0B" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                        </div>
+                        <div class="suggestion-text">Are there any profile issues?</div>
+                        <svg class="suggestion-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </div>
+                    <div class="suggestion-item" onclick="askQuestion('How can I improve my success rate?')">
+                        <div class="suggestion-icon teal">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="9" stroke="#d1d5db" stroke-width="3"/>
+                                <path d="M12 3a9 9 0 0 1 9 9" stroke="#0F6E56" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="suggestion-text">How can I improve my success rate?</div>
+                        <svg class="suggestion-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-area" id="chatArea"></div>
+
+            <div class="chat-input">
+                <div class="input-wrapper">
+                    <div class="input-box">
+                        <input type="text" id="chatInput" placeholder="Ask anything..." onkeypress="handleKeyPress(event)">
+                        <svg class="send-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"/>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                        </svg>
+                    </div>
+                    <div class="attach-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2">
+                            <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Items Button -->
+    <button class="floating-action-btn" onclick="openAIWithQuestion()">Action items</button>
+
+    <!-- Authorization Modal -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal">
+            <div class="modal-title">Authorize data access</div>
+            <div class="modal-text">
+                AIRIS would like to access your client data (profile, accounts & goals) to provide personalized assistance. This data will be used only during your session and will not be stored.
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="cancelAuthorization()">Cancel</button>
+                <button class="modal-btn confirm" onclick="confirmAuthorization()">Authorize</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Drawer Overlay -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+
+    <!-- Edit Drawer -->
+    <div class="edit-drawer" id="editDrawer">
+        <div class="drawer-header-bar">
+            <div class="drawer-header-title">
+                <span id="drawerIcon"></span>
+                <span id="drawerTitle">Retirement Age</span>
+            </div>
+            <button class="drawer-close-btn" onclick="closeDrawer()">✕</button>
+        </div>
+
+        <div class="drawer-content-area">
+            <div class="drawer-form">
+                <div class="form-group">
+                    <label class="form-label">Goal name</label>
+                    <input type="text" class="form-input" value="Retirement Age" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-container">
+                        <input type="checkbox">
+                        <span class="checkbox-label">Specify calendar month for retirement</span>
+                    </label>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <label class="form-col-header">Millennial</label>
+                        <div class="form-group">
+                            <label class="form-label">Retirement age</label>
+                            <input type="number" class="form-input" value="62" id="millennialAge">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <label class="form-col-header">Mike</label>
+                        <div class="form-group">
+                            <label class="form-label">Retirement age</label>
+                            <input type="number" class="form-input" value="64" id="mikeAge">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="drawer-footer">
+            <div class="notes-section">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2">
+                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                </svg>
+                <span>Notes</span>
+            </div>
+            <div class="drawer-buttons">
+                <button class="drawer-btn cancel" onclick="closeDrawer()">Cancel</button>
+                <button class="drawer-btn save">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isAIOpen = false;
+        let isFullscreen = false;
+        let isDataAccessAuthorized = null === 'true';
+        const baseSuccessRate = 62;
+        let pendingQuestion = null; // Store question asked before authorization
+        const recommendations = [
+            { id: 1, title: "Delay retirement to age 65", impact: "+12% est.", impactValue: 12, description: "Pushing retirement from 62 to 65 adds 3 years of accumulation and reduces the distribution period by 3 years. This is often the single most impactful lever.", enabled: false },
+            { id: 2, title: "Increase 401(k) contributions to max", impact: "+8% est.", impactValue: 8, description: "The client is currently contributing 10% of income. Maximizing 401(k) contributions ($23,500/yr) with employer match would significantly boost the portfolio at retirement.", enabled: false },
+            { id: 3, title: "Reduce retirement expenses to $7,000/mo", impact: "+6% est.", impactValue: 6, description: "A $1,000/mo reduction in retirement living expenses compounds over a 30-year retirement, reducing total drawdown needs by ~$360K in nominal terms.", enabled: false },
+            { id: 4, title: "Apply optimal Social Security strategy", impact: "+4% est.", impactValue: 4, description: "The current plan uses age-62 filing. The optimal strategy may recommend delaying to age 67-70, increasing lifetime benefits substantially.", enabled: false },
+            { id: 5, title: "Optimize asset allocation", impact: "+2% est.", impactValue: 2, description: "Review the current allocation to ensure the equity/fixed-income mix is appropriate for the client's time horizon and risk tolerance.", enabled: false }
+        ];
+
+        function toggleAI() {
+            isAIOpen = !isAIOpen;
+            document.getElementById('aiPanel').classList.toggle('open');
+        }
+
+        function openAIWithQuestion() {
+            if (!isAIOpen) {
+                toggleAI();
+            }
+            setTimeout(() => {
+                askQuestion('How can I improve my success rate?');
+            }, 300);
+        }
+
+        function toggleFullscreen() {
+            isFullscreen = !isFullscreen;
+            document.getElementById('aiPanel').classList.toggle('fullscreen');
+        }
+
+        function newChat() {
+            // Clear chat area
+            const chatArea = document.getElementById('chatArea');
+            chatArea.innerHTML = '';
+
+            // Show suggestions again
+            const suggestionsSection = document.getElementById('suggestionsSection');
+            suggestionsSection.style.display = 'block';
+
+            // Reset input
+            const chatInput = document.getElementById('chatInput');
+            chatInput.value = '';
+        }
+
+        // Data Access Authorization
+        function toggleDataAccess() {
+            const toggle = document.getElementById('clientDataToggle');
+
+            if (!toggle.classList.contains('on')) {
+                // Show authorization modal
+                document.getElementById('authModal').classList.add('show');
+            } else {
+                // Turn off (though this shouldn't normally happen after first authorization)
+                toggle.classList.remove('on');
+                isDataAccessAuthorized = false;
+                
+            }
+        }
+
+        function cancelAuthorization() {
+            document.getElementById('authModal').classList.remove('show');
+
+            // If there was a pending question, show a message that authorization was declined
+            if (pendingQuestion) {
+                const chatArea = document.getElementById('chatArea');
+                chatArea.innerHTML += `
+                    <div class="message-group assistant">
+                        <div class="message-header">
+                            <div class="avatar">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <path d="M8 1l1.8 4.2L14 7l-4.2 1.8L8 13l-1.8-4.2L2 7l4.2-1.8z" fill="white"/>
+                                </svg>
+                            </div>
+                            <div class="sender-name">AIRIS</div>
+                        </div>
+                        <div class="message-content">
+                            <p style="font-size: 13px; color: #666;">No problem! If you change your mind, you can enable data access anytime using the toggle above.</p>
+                            <p style="font-size: 13px; color: #666; margin-top: 8px;">In the meantime, feel free to ask me general questions about retirement planning, or explore other features.</p>
+                        </div>
+                    </div>
+                `;
+                smoothScrollToBottom(100);
+                pendingQuestion = null; // Clear the pending question
+            }
+        }
+
+        function confirmAuthorization() {
+            // Close modal
+            document.getElementById('authModal').classList.remove('show');
+
+            // Turn on toggle
+            const toggle = document.getElementById('clientDataToggle');
+            toggle.classList.add('on');
+
+            // Save authorization state
+            isDataAccessAuthorized = true;
+            
+
+            // Hide data access section and show status bar
+            setTimeout(() => {
+                document.getElementById('dataAccessSection').style.display = 'none';
+                document.getElementById('statusBar').style.display = 'flex';
+            }, 300);
+
+            // If there's a pending question, answer it now
+            if (pendingQuestion) {
+                const questionToAsk = pendingQuestion;
+                pendingQuestion = null; // Clear the pending question
+
+                // Show authorization success message first
+                const chatArea = document.getElementById('chatArea');
+                chatArea.innerHTML += `
+                    <div class="message-group assistant" id="authSuccessMsg">
+                        <div class="message-header">
+                            <div class="avatar">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <path d="M8 1l1.8 4.2L14 7l-4.2 1.8L8 13l-1.8-4.2L2 7l4.2-1.8z" fill="white"/>
+                                </svg>
+                            </div>
+                            <div class="sender-name">AIRIS</div>
+                        </div>
+                        <div class="message-content">
+                            <p style="color: #10b981; font-weight: 500;">✓ Data access authorized</p>
+                            <p style="font-size: 13px; color: #666; margin-top: 4px;">Great! Now let me analyze the client's plan...</p>
+                        </div>
+                    </div>
+                `;
+
+                smoothScrollToBottom(100);
+
+                // Add thinking indicator after a brief pause
+                setTimeout(() => {
+                    chatArea.innerHTML += `
+                        <div class="message-group assistant" id="thinkingIndicator">
+                            <div class="message-header">
+                                <div class="avatar">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M8 1l1.8 4.2L14 7l-4.2 1.8L8 13l-1.8-4.2L2 7l4.2-1.8z" fill="white"/>
+                                    </svg>
+                                </div>
+                                <div class="sender-name">AIRIS</div>
+                            </div>
+                            <div class="message-content">
+                                <div class="thinking-indicator">
+                                    <span>Analyzing</span>
+                                    <div class="thinking-dots">
+                                        <div class="thinking-dot"></div>
+                                        <div class="thinking-dot"></div>
+                                        <div class="thinking-dot"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    smoothScrollToBottom(100);
+
+                    // Answer the question after thinking
+                    setTimeout(() => {
+                        const thinkingIndicator = document.getElementById('thinkingIndicator');
+                        if (thinkingIndicator) {
+                            thinkingIndicator.remove();
+                        }
+
+                        if (questionToAsk.toLowerCase().includes('profile issues')) {
+                            showProfileIssues();
+                        } else if (questionToAsk.toLowerCase().includes('summarize') || questionToAsk.toLowerCase().includes('summary')) {
+                            showPlanSummary();
+                        } else {
+                            showAnalysis();
+                        }
+                    }, 1500);
+                }, 800);
+            }
+        }
+
+        // Initialize data access state on page load
+        function initializeDataAccess() {
+            if (isDataAccessAuthorized) {
+                // Hide toggle section, show status bar
+                document.getElementById('dataAccessSection').style.display = 'none';
+                document.getElementById('statusBar').style.display = 'flex';
+                document.getElementById('clientDataToggle').classList.add('on');
+            } else {
+                // Show toggle section, hide status bar
+                document.getElementById('dataAccessSection').style.display = 'block';
+                document.getElementById('statusBar').style.display = 'none';
+            }
+        }
+
+        // Toggle dropdown menu
+        function toggleDropdown(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('dataAccessDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Disconnect data access
+        function disconnectData(event) {
+            event.stopPropagation();
+
+            // Hide dropdown
+            document.getElementById('dataAccessDropdown').classList.remove('show');
+
+            // Turn off toggle
+            const toggle = document.getElementById('clientDataToggle');
+            toggle.classList.remove('on');
+
+            // Update authorization state
+            isDataAccessAuthorized = false;
+            
+
+            // Show data access section and hide status bar
+            document.getElementById('statusBar').style.display = 'none';
+            document.getElementById('dataAccessSection').style.display = 'block';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dataAccessDropdown');
+            if (dropdown && !event.target.closest('.status-menu')) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // Smooth scroll helper
+        function smoothScrollToBottom(delay = 0) {
+            const chatArea = document.getElementById('chatArea');
+            setTimeout(() => {
+                chatArea.scrollTo({
+                    top: chatArea.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, delay);
+        }
+
+        function askQuestion(question) {
+            // Check if data access is authorized
+            if (!isDataAccessAuthorized) {
+                showDataAccessRequired(question);
+                return;
+            }
+
+            // Hide suggestions
+            document.getElementById('suggestionsSection').style.display = 'none';
+
+            // Add user message
+            const chatArea = document.getElementById('chatArea');
+            chatArea.innerHTML = `
+                <div class="message-group user">
+                    <div class="message-content">${question}</div>
+                </div>
+            `;
+
+            // Add thinking indicator
+            chatArea.innerHTML += `
+                <div class="message-group assistant" id="thinkingIndicator">
+                    <div class="message-header">
+                        <div class="avatar">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 1l1.8 4.2L14 7l-4.2 1.8L8 13l-1.8-4.2L2 7l4.2-1.8z" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="sender-name">AIRIS</div>
+                    </div>
+                    <div class="message-content">
+                        <div class="thinking-indicator">
+                            <span>Thinking</span>
+                            <div class="thinking-dots">
+                                <div class="thinking-dot"></div>
+                                <div class="thinking-dot"></div>
+                                <div class="thinking-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Simulate AI response based on question after thinking
+            setTimeout(() => {
+                // Remove thinking indicator
+                const thinkingIndicator = document.getElementById('thinkingIndicator');
+                if (thinkingIndicator) {
+                    thinkingIndicator.remove();
+                }
+
+                if (question.toLowerCase().includes('profile issues')) {
+                    showProfileIssues();
+                } else if (question.toLowerCase().includes('summarize') || question.toLowerCase().includes('summary')) {
+                    showPlanSummary();
+                } else {
+                    showAnalysis();
+                }
+            }, 1500);
+        }
+
+        function showDataAccessRequired(question) {
+            // Store the question to answer after authorization
+            pendingQuestion = question;
+
+            // Hide suggestions
+            document.getElementById('suggestionsSection').style.display = 'none';
+
+            // Add user message and data access prompt
+            const chatArea = document.getElementById('chatArea');
+            chatArea.innerHTML = `
+                <div class="message-group user">
+                    <div class="message-content">${question}</div>
+                </div>
+                <div class="message-group assistant">
+                    <div class="message-header">
+                        <div class="avatar">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 1l1.8 4.2L14 7l-4.2 1.8L8 13l-1.8-4.2L2 7l4.2-1.8z" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="sender-name">AIRIS</div>
+                    </div>
+                    <div class="message-content">
+                        <p style="margin-bottom: 16px; font-size: 14px; color: #333; line-height: 1.6;">I'd be happy to help you with that! To provide personalized insights about this client's plan, I need access to their data.</p>
+
+                        <div style="
+                            background: linear-gradient(135deg, #f0f4ff 0%, #fef3f4 100%);
+                            border-radius: 12px;
+                            padding: 18px;
+                            margin-bottom: 16px;
+                            border: 1px solid #e5e9f5;
+                            box-shadow: 0 2px 8px rgba(83, 74, 183, 0.08);
+                        ">
+                            <div style="display: flex; align-items: flex-start; gap: 12px;">
+                                <div style="
+                                    width: 40px;
+                                    height: 40px;
+                                    border-radius: 10px;
+                                    background: #4966D0;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    flex-shrink: 0;
+                                    box-shadow: 0 4px 12px rgba(73, 102, 208, 0.25);
+                                ">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                        <path d="M7 11V7a5 5 0 0110 0v4"/>
+                                    </svg>
+                                </div>
+                                <div style="flex: 1;">
+                                    <h3 style="font-size: 14px; font-weight: 600; color: #1a1a2e; margin-bottom: 6px;">Data access required</h3>
+                                    <p style="font-size: 13px; color: #666; line-height: 1.55; margin: 0;">
+                                        Please enable <strong style="color: #4966D0;">Client data access</strong> to continue. Your data is only used during this session and never stored.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="scrollToDataAccess()" style="
+                            background: #4966D0;
+                            color: white;
+                            border: none;
+                            padding: 14px 24px;
+                            border-radius: 10px;
+                            font-size: 14px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            width: 100%;
+                            transition: all 0.2s;
+                            box-shadow: 0 4px 12px rgba(73, 102, 208, 0.25);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 8px;
+                        " onmouseover="this.style.background='#3B52B8'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 16px rgba(73, 102, 208, 0.35)'" onmouseout="this.style.background='#4966D0'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(73, 102, 208, 0.25)'">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0110 0v4"/>
+                            </svg>
+                            Enable data access
+                        </button>
+
+                        <div style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 6px;
+                            margin-top: 12px;
+                            padding: 8px;
+                            background: #f8f9fb;
+                            border-radius: 8px;
+                        ">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5">
+                                <path d="M9 12l2 2 4-4"/>
+                                <circle cx="12" cy="12" r="10"/>
+                            </svg>
+                            <p style="font-size: 12px; color: #666; margin: 0;">
+                                Secure & temporary access during this session
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            smoothScrollToBottom(100);
+        }
+
+        function scrollToDataAccess() {
+            // Directly show authorization modal
+            document.getElementById('authModal').classList.add('show');
+        }
+
+        function showAnalysis() {
+            const chatArea = document.getElementById('chatArea');
+            chatArea.innerHTML += `
+                <div class="message-group assistant">
+                    <div class="message-header">
+                        <div class="avatar">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 1l1.8 4.2L14 7l-4.2 1.8L8 13l-1.8-4.2L2 7l4.2-1.8z" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="sender-name">AIRIS</div>
+                    </div>
+                    <div class="message-content">
+                        <div class="snapshot fade-in-item" style="animation-delay: 0s;">
+                            <p class="snapshot-label">Current plan snapshot</p>
+                            <div class="snapshot-grid">
+                                <div>
+                                    <p class="snapshot-item-label">Success rate</p>
+                                    <p class="snapshot-item-value">62%</p>
+                                </div>
+                                <div>
+                                    <p class="snapshot-item-label">Retirement age</p>
+                                    <p class="snapshot-item-value">62</p>
+                                </div>
+                                <div>
+                                    <p class="snapshot-item-label">Monthly expenses</p>
+                                    <p class="snapshot-item-value">$8,000</p>
+                                </div>
+                                <div>
+                                    <p class="snapshot-item-label">Savings rate</p>
+                                    <p class="snapshot-item-value">10%</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="intro fade-in-item" style="animation-delay: 0.2s;">Based on your data, here are <strong>3 improvement plans</strong> combining the most impactful changes:</p>
+                        <p class="sub-intro fade-in-item" style="animation-delay: 0.3s;">Each plan combines multiple adjustments. Estimated impacts are not additive.</p>
+
+                        <!-- Plan A -->
+                        <div class="plan-card fade-in-item" style="animation-delay: 0.4s;">
+                            <div class="plan-header">
+                                <div class="plan-header-left">
+                                    <span class="plan-tag a">Plan A</span>
+                                    <span class="plan-name">Conservative</span>
+                                </div>
+                                <span class="plan-result">&rarr; 82%</span>
+                            </div>
+                            <div class="progress-row">
+                                <div class="progress-track"><div class="progress-fill-before" style="width:62%"></div></div>
+                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="#0F6E56" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <div class="progress-track"><div class="progress-fill-after" style="width:82%"></div></div>
+                            </div>
+                            <div class="plan-steps">
+                                <div class="plan-step"><span class="step-num">1.</span><span class="step-text">Delay retirement to age <strong>65</strong></span></div>
+                                <div class="plan-step"><span class="step-num">2.</span><span class="step-text">Increase 401(k) contributions to <strong>max</strong></span></div>
+                            </div>
+                        </div>
+
+                        <!-- Plan B -->
+                        <div class="plan-card recommended fade-in-item" style="animation-delay: 0.5s;">
+                            <div class="recommended-badge">Recommended</div>
+                            <div class="plan-header">
+                                <div class="plan-header-left">
+                                    <span class="plan-tag b">Plan B</span>
+                                    <span class="plan-name">Balanced</span>
+                                </div>
+                                <span class="plan-result">&rarr; 88%</span>
+                            </div>
+                            <div class="progress-row">
+                                <div class="progress-track"><div class="progress-fill-before" style="width:62%"></div></div>
+                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="#0F6E56" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <div class="progress-track"><div class="progress-fill-after" style="width:88%"></div></div>
+                            </div>
+                            <div class="plan-steps">
+                                <div class="plan-step"><span class="step-num">1.</span><span class="step-text">Delay retirement to age <strong>65</strong></span></div>
+                                <div class="plan-step"><span class="step-num">2.</span><span class="step-text">Reduce expenses to <strong>$7,000/mo</strong></span></div>
+                                <div class="plan-step"><span class="step-num">3.</span><span class="step-text">Optimize Social Security strategy</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Plan C -->
+                        <div class="plan-card fade-in-item" style="animation-delay: 0.6s;">
+                            <div class="plan-header">
+                                <div class="plan-header-left">
+                                    <span class="plan-tag c">Plan C</span>
+                                    <span class="plan-name">Aggressive</span>
+                                </div>
+                                <span class="plan-result">&rarr; 94%</span>
+                            </div>
+                            <div class="progress-row">
+                                <div class="progress-track"><div class="progress-fill-before" style="width:62%"></div></div>
+                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="#0F6E56" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <div class="progress-track"><div class="progress-fill-after" style="width:94%"></div></div>
+                            </div>
+                            <div class="plan-steps">
+                                <div class="plan-step"><span class="step-num">1.</span><span class="step-text">Delay retirement to age <strong>65</strong></span></div>
+                                <div class="plan-step"><span class="step-num">2.</span><span class="step-text">Max out 401(k) contributions</span></div>
+                                <div class="plan-step"><span class="step-num">3.</span><span class="step-text">Reduce expenses to <strong>$7,000/mo</strong></span></div>
+                            </div>
+                        </div>
+
+                        <!-- Action buttons -->
+                        <div class="btn-row fade-in-item" style="animation-delay: 0.7s;">
+                            <button class="btn btn-outline">Create proposed plan</button>
+                            <button class="btn btn-outline">Run stress test</button>
+                        </div>
+                        <div class="btn-row fade-in-item" style="animation-delay: 0.8s;">
+                            <button class="btn btn-disapprove">Disapprove</button>
+                            <button class="btn btn-approve" id="approveBtn" onclick="approvePlanB()">Approve</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Scroll after most content has faded in
+            smoothScrollToBottom(800);
+            // Final scroll to ensure everything is visible
+            smoothScrollToBottom(1200);
+        }
+
+        function showProfileIssues() {
+            const chatArea = document.getElementById('chatArea');
+            chatArea.innerHTML += `
+                <div class="message-group assistant">
+                    <div class="message-header">
+                        <div class="avatar">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 1l1.8 4.2L14 7l-4.2 1.8L8 13l-1.8-4.2L2 7l4.2-1.8z" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="sender-name">AIRIS</div>
+                    </div>
+                    <div class="message-content">
+                        <p class="intro-text fade-in-item" style="animation-delay: 0s;">I've reviewed your full profile and found <strong>7 items</strong> that may need attention across 4 categories:</p>
+
+                        <!-- Missing data -->
+                        <div class="category-label fade-in-item" style="animation-delay: 0.2s;">Missing data</div>
+
+                        <div class="issue-card fade-in-item" style="animation-delay: 0.3s;">
+                            <div class="issue-header">
+                                <span class="issue-title">Retirement expense not entered</span>
+                                <span class="badge badge-high">High</span>
+                            </div>
+                            <p class="issue-description">Monthly retirement expense is set to $13, which appears to be a placeholder. Without an accurate value, retirement projections will be unreliable.</p>
+                            <div class="mini-cards">
+                                <div class="mini-card" onclick="openDrawer('goals','retirement-expense')">
+                                    <div class="mini-card-header">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                        <span class="mini-card-label">Retirement</span>
+                                    </div>
+                                    <div class="mini-card-body">
+                                        <div class="mini-card-name">Retirement Expense</div>
+                                        <div class="mini-card-value">Monthly: $13</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="issue-card fade-in-item" style="animation-delay: 0.4s;">
+                            <div class="issue-header">
+                                <span class="issue-title">Primary Home Relocation has no purchase price</span>
+                                <span class="badge badge-medium">Medium</span>
+                            </div>
+                            <p class="issue-description">Purchase price is $0. This goal won't impact the plan until a value is entered.</p>
+                            <div class="mini-cards">
+                                <div class="mini-card" onclick="openDrawer('goals','home-relocation')">
+                                    <div class="mini-card-header">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                        <span class="mini-card-label">Primary home</span>
+                                    </div>
+                                    <div class="mini-card-body">
+                                        <div class="mini-card-name">Home Relocation</div>
+                                        <div class="mini-card-value">Purchase price: $0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Unreasonable values -->
+                        <div class="category-label fade-in-item" style="animation-delay: 0.5s;">Unreasonable values</div>
+
+                        <div class="issue-card fade-in-item" style="animation-delay: 0.6s;">
+                            <div class="issue-header">
+                                <span class="issue-title">Alimony expense is $0/mo</span>
+                                <span class="badge badge-medium">Medium</span>
+                            </div>
+                            <p class="issue-description">An alimony card exists but the amount is $0. Either update the amount or remove the card if it's no longer applicable.</p>
+                            <div class="mini-cards">
+                                <div class="mini-card" onclick="openDrawer('expenses','alimony')">
+                                    <div class="mini-card-header">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                        <span class="mini-card-label">Alimony</span>
+                                    </div>
+                                    <div class="mini-card-body">
+                                        <div class="mini-card-name">John's Alimony</div>
+                                        <div class="mini-card-value">$0/mo</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="issue-card fade-in-item" style="animation-delay: 0.7s;">
+                            <div class="issue-header">
+                                <span class="issue-title">Medical expense appears very low</span>
+                                <span class="badge badge-low">Low</span>
+                            </div>
+                            <p class="issue-description">John's medical expense is $1/mo. This may be a placeholder — verify or update.</p>
+                            <div class="mini-cards">
+                                <div class="mini-card" onclick="openDrawer('expenses','medical')">
+                                    <div class="mini-card-header">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/><path d="M3 12h4l2-4 2 8 2-4h4" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+                                        <span class="mini-card-label">Medical expense</span>
+                                    </div>
+                                    <div class="mini-card-body">
+                                        <div class="mini-card-name">John's Medical</div>
+                                        <div class="mini-card-value">$1/mo</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Input conflicts -->
+                        <div class="category-label fade-in-item" style="animation-delay: 0.8s;">Input conflicts</div>
+
+                        <div class="issue-card fade-in-item" style="animation-delay: 0.9s;">
+                            <div class="issue-header">
+                                <span class="issue-title">Retirement age vs. Social Security filing age</span>
+                                <span class="badge badge-high">High</span>
+                            </div>
+                            <p class="issue-description">Retirement age is <strong>62</strong> but SS filing age is <strong>67 (FRA)</strong>, creating a 5-year income gap.</p>
+                            <div class="mini-cards">
+                                <div class="mini-card" onclick="openDrawer('goals','retirement-age')">
+                                    <div class="mini-card-header">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                        <span class="mini-card-label">Retirement</span>
+                                    </div>
+                                    <div class="mini-card-body">
+                                        <div class="mini-card-name">Retirement Age</div>
+                                        <div class="mini-card-value">John: 62 · Spouse: 64</div>
+                                    </div>
+                                </div>
+                                <div class="mini-card" onclick="openDrawer('income','social-security')">
+                                    <div class="mini-card-header">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/><path d="M6 12h.01"/><path d="M18 12h.01"/></svg>
+                                        <span class="mini-card-label">Income</span>
+                                    </div>
+                                    <div class="mini-card-body">
+                                        <div class="mini-card-name">Social Security</div>
+                                        <div class="mini-card-value">Filing age: 67 (FRA)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="issue-card fade-in-item" style="animation-delay: 1.0s;">
+                            <div class="issue-header">
+                                <span class="issue-title">Duplicate expense entries</span>
+                                <span class="badge badge-low">Low</span>
+                            </div>
+                            <p class="issue-description">Two "Health Insurance" entries found ($450/mo and $420/mo).</p>
+                            <div class="mini-cards">
+                                <div class="mini-card" onclick="openDrawer('expenses','health-insurance-1')">
+                                    <div class="mini-card-header">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/><path d="M3 12h4l2-4 2 8 2-4h4" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+                                        <span class="mini-card-label">Medical expense</span>
+                                    </div>
+                                    <div class="mini-card-body">
+                                        <div class="mini-card-name">Health Insurance</div>
+                                        <div class="mini-card-value">$450/mo</div>
+                                    </div>
+                                </div>
+                                <div class="mini-card" onclick="openDrawer('expenses','health-insurance-2')">
+                                    <div class="mini-card-header">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/><path d="M3 12h4l2-4 2 8 2-4h4" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+                                        <span class="mini-card-label">Medical expense</span>
+                                    </div>
+                                    <div class="mini-card-body">
+                                        <div class="mini-card-name">Health Insurance</div>
+                                        <div class="mini-card-value">$420/mo</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Potentially outdated -->
+                        <div class="category-label fade-in-item" style="animation-delay: 1.1s;">Potentially outdated</div>
+
+                        <div class="issue-card fade-in-item" style="animation-delay: 1.2s;">
+                            <div class="issue-header">
+                                <span class="issue-title">Salary not updated in over 2 years</span>
+                                <span class="badge badge-low">Low</span>
+                            </div>
+                            <p class="issue-description">John's salary ($78,000) was last updated on Mar 2024. Consider verifying it's still current.</p>
+                            <div class="mini-cards">
+                                <div class="mini-card" onclick="openDrawer('income','salary')">
+                                    <div class="mini-card-header">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/><path d="M6 12h.01"/><path d="M18 12h.01"/></svg>
+                                        <span class="mini-card-label">Income</span>
+                                    </div>
+                                    <div class="mini-card-body">
+                                        <div class="mini-card-name">John's Salary</div>
+                                        <div class="mini-card-value">$78,000/yr</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="issues-footer fade-in-item" style="animation-delay: 1.3s;">
+                            <p>Want to dive deeper?</p>
+                            <div class="footer-buttons">
+                                <button class="footer-btn">Fix all issues step by step ↗</button>
+                                <button class="footer-btn">Focus on input conflicts only ↗</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Scroll after most content has faded in
+            smoothScrollToBottom(900);
+            // Final scroll to ensure everything is visible
+            smoothScrollToBottom(1500);
+        }
+
+        function showPlanSummary() {
+            const chatArea = document.getElementById('chatArea');
+            chatArea.innerHTML += `
+                <div class="message-group assistant">
+                    <div class="message-header">
+                        <div class="avatar">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 1l1.8 4.2L14 7l-4.2 1.8L8 13l-1.8-4.2L2 7l4.2-1.8z" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="sender-name">AIRIS</div>
+                    </div>
+                    <div class="message-content">
+                        <p class="ai-text fade-in-item" style="animation-delay: 0s;">
+                            Here's a summary for <b>John & Sarah Smith</b>. They're planning for retirement at ages 65 and 63.
+                        </p>
+
+                        <!-- Probability hero -->
+                        <div class="prob-card fade-in-item" style="animation-delay: 0.1s;">
+                            <div class="prob-label">Probability of success</div>
+                            <div class="prob-value">82%</div>
+                            <div class="prob-sub">Monte Carlo simulation</div>
+                        </div>
+
+                        <!-- Metrics 2x2 -->
+                        <div class="metric-grid fade-in-item" style="animation-delay: 0.2s;">
+                            <div class="metric-card">
+                                <div class="metric-label">Net worth</div>
+                                <div class="metric-value">$1.72M</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Invested</div>
+                                <div class="metric-value">$1.45M</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Income</div>
+                                <div class="metric-value">$245K</div>
+                                <div class="metric-sub">/year</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Allocation</div>
+                                <div class="metric-value">72/28</div>
+                                <div class="metric-sub">Eq / FI</div>
+                            </div>
+                        </div>
+
+                        <!-- Key findings -->
+                        <div class="section-title fade-in-item" style="animation-delay: 0.3s;">Key findings</div>
+                        <div class="findings">
+                            <div class="finding-item fade-in-item" style="animation-delay: 0.4s;">
+                                <div class="finding-dot" style="background: #f59e0b;"></div>
+                                <div>
+                                    <div class="finding-title">Insurance gap</div>
+                                    <div class="finding-desc">$500K term life expires at 60. No LTC coverage.</div>
+                                </div>
+                            </div>
+                            <div class="finding-item fade-in-item" style="animation-delay: 0.5s;">
+                                <div class="finding-dot" style="background: #4966D0;"></div>
+                                <div>
+                                    <div class="finding-title">Tax opportunity</div>
+                                    <div class="finding-desc">Roth conversion to 24% bracket could add ~$180K.</div>
+                                </div>
+                            </div>
+                            <div class="finding-item fade-in-item" style="animation-delay: 0.6s;">
+                                <div class="finding-dot" style="background: #10b981;"></div>
+                                <div>
+                                    <div class="finding-title">Education funding</div>
+                                    <div class="finding-desc">529 covers 65% (Emma) and 40% (Jake).</div>
+                                </div>
+                            </div>
+                            <div class="finding-item fade-in-item" style="animation-delay: 0.7s;">
+                                <div class="finding-dot" style="background: #ef4444;"></div>
+                                <div>
+                                    <div class="finding-title">Concentration risk</div>
+                                    <div class="finding-desc">AAPL at 14% of portfolio.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Suggested actions -->
+                        <div class="section-title fade-in-item" style="animation-delay: 0.8s;">Suggested actions</div>
+                        <div class="actions-box fade-in-item" style="animation-delay: 0.9s;">
+                            <div class="action-row">
+                                <span class="action-badge badge-red">1</span>
+                                <span>Address life insurance gap before age 60</span>
+                            </div>
+                            <div class="action-row">
+                                <span class="action-badge badge-amber">2</span>
+                                <span>Evaluate Roth conversion strategy</span>
+                            </div>
+                            <div class="action-row">
+                                <span class="action-badge badge-amber">3</span>
+                                <span>Increase 529 contributions for Jake</span>
+                            </div>
+                            <div class="action-row">
+                                <span class="action-badge badge-gray">4</span>
+                                <span>Diversify AAPL concentrated position</span>
+                            </div>
+                        </div>
+
+                        <!-- Follow-up chips -->
+                        <div class="chips fade-in-item" style="animation-delay: 1.0s;">
+                            <div class="chip">Retirement details</div>
+                            <div class="chip">Tax analysis</div>
+                            <div class="chip">Insurance gaps</div>
+                            <div class="chip">Current vs proposed</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Scroll after most content has faded in
+            smoothScrollToBottom(800);
+            // Final scroll to ensure everything is visible
+            smoothScrollToBottom(1200);
+        }
+
+        function openDrawer(section, card) {
+            const drawer = document.getElementById('editDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            const drawerTitle = document.getElementById('drawerTitle');
+            const drawerIcon = document.getElementById('drawerIcon');
+            const aiPanel = document.getElementById('aiPanel');
+
+            // Set drawer title and icon based on the card
+            const cardInfo = {
+                'retirement-age': {
+                    title: 'Retirement Age',
+                    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>'
+                },
+                'retirement-expense': {
+                    title: 'Retirement Expense',
+                    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>'
+                },
+                'home-relocation': {
+                    title: 'Home Relocation',
+                    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
+                },
+                'alimony': {
+                    title: 'John\'s Alimony',
+                    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>'
+                },
+                'medical': {
+                    title: 'John\'s Medical',
+                    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/><path d="M3 12h4l2-4 2 8 2-4h4" stroke="#fff" stroke-width="1.5" fill="none"/></svg>'
+                },
+                'social-security': {
+                    title: 'Social Security',
+                    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/><path d="M6 12h.01"/><path d="M18 12h.01"/></svg>'
+                },
+                'health-insurance-1': {
+                    title: 'Health Insurance',
+                    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/><path d="M3 12h4l2-4 2 8 2-4h4" stroke="#fff" stroke-width="1.5" fill="none"/></svg>'
+                },
+                'health-insurance-2': {
+                    title: 'Health Insurance',
+                    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/><path d="M3 12h4l2-4 2 8 2-4h4" stroke="#fff" stroke-width="1.5" fill="none"/></svg>'
+                },
+                'salary': {
+                    title: 'John\'s Salary',
+                    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/><path d="M6 12h.01"/><path d="M18 12h.01"/></svg>'
+                }
+            };
+
+            const info = cardInfo[card] || { title: 'Edit Details', icon: '' };
+
+            drawerTitle.textContent = info.title;
+            drawerIcon.innerHTML = info.icon;
+
+            // Expand AI panel to fullscreen first
+            if (aiPanel && !aiPanel.classList.contains('fullscreen')) {
+                aiPanel.classList.add('fullscreen');
+            }
+
+            // Push AI panel to the left
+            if (aiPanel) {
+                aiPanel.classList.add('pushed');
+            }
+
+            // Open the drawer and overlay
+            overlay.classList.add('show');
+            drawer.classList.add('open');
+        }
+
+        function closeDrawer() {
+            const drawer = document.getElementById('editDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            const aiPanel = document.getElementById('aiPanel');
+
+            drawer.classList.remove('open');
+            overlay.classList.remove('show');
+
+            // Un-push AI panel
+            if (aiPanel) {
+                aiPanel.classList.remove('pushed');
+            }
+        }
+
+        function toggleRecommendation(id) {
+            const toggle = document.getElementById(`toggle-${id}`);
+            const item = document.getElementById(`rec-${id}`);
+            const rec = recommendations.find(r => r.id === id);
+
+            rec.enabled = !rec.enabled;
+            toggle.classList.toggle('active');
+            item.classList.toggle('enabled');
+
+            // Calculate new projected success rate
+            const totalImpact = recommendations
+                .filter(r => r.enabled)
+                .reduce((sum, r) => sum + r.impactValue, 0);
+            const newRate = baseSuccessRate + totalImpact;
+            const enabledCount = recommendations.filter(r => r.enabled).length;
+
+            // Update projection display
+            updateProjectionDisplay(newRate, enabledCount);
+
+            // Update approve button state
+            const anyEnabled = recommendations.some(r => r.enabled);
+            document.getElementById('approveBtn').disabled = !anyEnabled;
+        }
+
+        function updateProjectionDisplay(newRate, count) {
+            // Update the small circle percentage
+            const smallCircleText = document.querySelector('.projection-circle text');
+            if (smallCircleText) {
+                smallCircleText.textContent = newRate + '%';
+            }
+
+            // Update the projection change text
+            const projectionChange = document.querySelector('.projection-change');
+            if (projectionChange) {
+                if (count === 0) {
+                    projectionChange.textContent = `${baseSuccessRate}% → ${baseSuccessRate}% with 0 improvements`;
+                } else {
+                    projectionChange.textContent = `${baseSuccessRate}% → ${newRate}% with ${count} improvement${count > 1 ? 's' : ''}`;
+                }
+            }
+
+            // Update the small circle stroke with animation
+            const smallCircle = document.querySelector('.projection-circle circle:last-of-type');
+            if (smallCircle) {
+                const circumference = 163.36;
+                const percentage = newRate / 100;
+                const offset = circumference - (percentage * circumference);
+                smallCircle.style.transition = 'stroke-dashoffset 0.5s ease';
+                smallCircle.style.strokeDashoffset = offset;
+            }
+        }
+
+        function approvePlanB() {
+            const chatArea = document.getElementById('chatArea');
+            const approveBtn = document.getElementById('approveBtn');
+
+            // Disable approve button immediately
+            approveBtn.disabled = true;
+
+            // Animate the proposed plan to 88%
+            const circle = document.getElementById('proposedCircle');
+            const text = document.getElementById('proposedPercent');
+
+            if (circle && text) {
+                // Calculate stroke-dashoffset for 88%
+                const circumference = 527.79;
+                const offset = circumference - (0.88 * circumference);
+
+                circle.style.strokeDashoffset = offset;
+                let current = 75;
+                const target = 88;
+                const interval = setInterval(() => {
+                    current++;
+                    text.textContent = current + '%';
+                    if (current >= target) {
+                        clearInterval(interval);
+                    }
+                }, 30);
+            }
+
+            // Show success message directly without thinking indicator
+            chatArea.innerHTML += `
+                <div class="message-group assistant">
+                    <div class="message-header">
+                        <div class="avatar">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 1l1.8 4.2L14 7l-4.2 1.8L8 13l-1.8-4.2L2 7l4.2-1.8z" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="sender-name">AIRIS</div>
+                    </div>
+                    <div class="message-content">
+                        <p>✅ Perfect! I've applied <strong>Plan B (Balanced)</strong> to your retirement plan. Your Proposed Plan success rate has been updated to <strong>88%</strong>!</p>
+                        <p>You can now review the updated plan details in the Proposed Plan section on the main page.</p>
+                    </div>
+                </div>
+            `;
+
+            // Smooth scroll after message appears
+            smoothScrollToBottom(100);
+
+            // Update approve button
+            approveBtn.textContent = 'Plan Applied ✓';
+            approveBtn.style.background = '#cbd5e0';
+        }
+
+        function approveChanges() {
+            const enabledCount = recommendations.filter(r => r.enabled).length;
+            if (enabledCount === 0) return;
+
+            // Show thinking indicator
+            const chatArea = document.getElementById('chatArea');
+            chatArea.innerHTML += `
+                <div class="message-group assistant" id="applyingIndicator">
+                    <div class="message-header">
+                        <div class="avatar">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M8 1l1.8 4.2L14 7l-4.2 1.8L8 13l-1.8-4.2L2 7l4.2-1.8z" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="sender-name">AIRIS</div>
+                    </div>
+                    <div class="message-content">
+                        <div class="thinking-indicator">
+                            <span>Applying changes</span>
+                            <div class="thinking-dots">
+                                <div class="thinking-dot"></div>
+                                <div class="thinking-dot"></div>
+                                <div class="thinking-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Disable approve button immediately
+            const approveBtn = document.getElementById('approveBtn');
+            approveBtn.disabled = true;
+
+            setTimeout(() => {
+                // Remove applying indicator
+                const applyingIndicator = document.getElementById('applyingIndicator');
+                if (applyingIndicator) {
+                    applyingIndicator.remove();
+                }
+
+                // Animate the proposed plan to 88%
+                const circle = document.getElementById('proposedCircle');
+                const text = document.getElementById('proposedPercent');
+
+                // Calculate stroke-dashoffset for 88%
+                const circumference = 527.79;
+                const offset = circumference - (0.88 * circumference);
+
+                circle.style.strokeDashoffset = offset;
+                let current = 75;
+                const target = 88;
+                const interval = setInterval(() => {
+                    current++;
+                    text.textContent = current + '%';
+                    if (current >= target) {
+                        clearInterval(interval);
+                    }
+                }, 30);
+
+                // Show success message
+                chatArea.innerHTML += `
+                    <div class="message-group assistant">
+                        <div class="message-header">
+                            <div class="avatar">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2L9.5 9.5L2 12L9.5 14.5L12 22L14.5 14.5L22 12L14.5 9.5L12 2Z" fill="white"/>
+                                    <circle cx="12" cy="12" r="2" fill="white"/>
+                                    <path d="M18 6L19 5M6 18L5 19M18 18L19 19M6 6L5 5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="sender-name">AIRIS</div>
+                        </div>
+                        <div class="message-content">
+                            <p>✅ Perfect! I've applied ${enabledCount} recommendation(s) to your plan. Your Proposed Plan success rate has been updated to <strong>88%</strong>!</p>
+                            <p>You can now review the updated plan details in the Proposed Plan section.</p>
+                        </div>
+                    </div>
+                `;
+
+                // Smooth scroll after message appears
+                smoothScrollToBottom(100);
+
+                // Update approve button
+                approveBtn.textContent = 'Changes Applied ✓';
+                approveBtn.style.background = '#cbd5e0';
+            }, 1500);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                const input = document.getElementById('chatInput');
+                const message = input.value.trim();
+                if (message) {
+                    askQuestion(message);
+                    input.value = '';
+                }
+            }
+        }
+
+        // Animate bars on page load
+        window.addEventListener('load', () => {
+            // Initialize data access state
+            initializeDataAccess();
+
+            setTimeout(() => {
+                document.querySelectorAll('.bar-column').forEach((bar, index) => {
+                    const targetHeight = bar.getAttribute('data-target');
+                    if (targetHeight) {
+                        setTimeout(() => {
+                            bar.style.height = targetHeight;
+                        }, index * 150);
+                    }
+                });
+            }, 500);
+        });
+    </script>
+<script src="/prototype-accessibility.js?v=1"></script><script src="../../../iris-inline-demo.js?v=1"></script></body>
+</html>

@@ -1,0 +1,37 @@
+html,body{height:100%;overflow:hidden;background:#fff!important}
+body>header,body>.sub-nav,body>main,body>.ai-fab{display:none!important}
+#aiPanel,#aiPanel.fullscreen.open,#aiPanel.fullscreen.open.pushed{position:fixed;inset:0;width:100%;height:100%;display:flex;box-shadow:none;transform:none;transition:none}
+.conversation-sidebar{display:none!important}.ai-panel-main{width:100%;min-width:0}
+.ai-header{padding:16px 24px}.ai-actions .icon-btn:not([title="New chat"]){display:none}
+.chat-area,.fullscreen .chat-area{padding:20px 24px;max-width:900px;width:100%;margin:0 auto;overscroll-behavior:contain}
+.ai-panel-main>.input-area,.input-container,.fullscreen .input-area{max-width:900px;width:100%;margin-inline:auto}
+.inline-modebar{display:flex;gap:8px;flex-wrap:wrap;padding:12px 24px;background:#f7f8fa}
+.inline-modebar button{font:14px/1.4 Arial,sans-serif;color:#4f565d;border:0;background:transparent;min-height:40px;padding:8px 12px;cursor:pointer}
+.inline-modebar button[aria-pressed=true]{background:#e6eaf2;color:#182b54;font-weight:600}
+.ai-panel .suggestion-item{cursor:pointer}.plan-card{cursor:pointer}.plan-card[aria-pressed=true]{outline:2px solid #3b62b0;outline-offset:-2px}
+#editDrawer{width:min(460px,52vw);height:100%;z-index:2200}.drawer-overlay{z-index:2100}
+#aiPanel.pushed .ai-panel-main{margin-right:min(460px,52vw)}
+#aiPanel.pushed .chat-area{padding-inline:16px}
+.inline-save-status{padding:12px 0;color:#276147;font-size:14px}.inline-demo-note{font:12px/1.4 Arial,sans-serif;color:#626262;padding:6px 24px}
+.form-input{color:#242424!important}.drawer-form .form-label{display:block;margin-bottom:8px}
+.modal-overlay{z-index:3000}.modal{max-width:calc(100% - 32px)}
+:where(button,a,input,[tabindex]):focus-visible{outline:2px solid #2145b0;outline-offset:3px}
+@media(max-width:600px){.ai-header{padding:12px 16px}.chat-area,.fullscreen .chat-area{padding:16px}.inline-modebar{gap:2px;padding:8px}.inline-modebar button{font-size:13px;padding:8px}.inline-demo-note{padding-inline:16px}#editDrawer{width:100%}#aiPanel.pushed .ai-panel-main{margin-right:0}.drawer-footer{padding:16px}.form-row{gap:12px}.plan-card{padding:16px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.inline-modebar[hidden]{display:none!important}
+.chat-input{max-width:900px;width:100%;margin-inline:auto}
+.input-box>button{border:0;background:#293c68;color:#fff;min-width:52px;min-height:36px;border-radius:6px;padding:6px 10px;cursor:pointer;font:13px Arial,sans-serif}
+#dataAccessSection:has(#dataAccessToggle[style*="none"]){display:none}
+CSS
+python3 - <<'PY'
+from pathlib import Path
+r=Path('/Users/yingchen/Documents/Claude/portfolio-japan');p=r/'iris-inline-demo.js';s=p.read_text().replace("if(issue){issue.dataset.resolved='true';", "if(issue){issue.dataset.resolved='true';const title=issue.querySelector('.issue-title');if(title)title.textContent=document.querySelector('#drawerTitle').textContent+' updated';const description=issue.querySelector('.issue-description');if(description)description.textContent=(labels[activeKey]?.[0]||'Value')+' is now '+Number(value).toLocaleString('en-US')+' in this demo.';")
+p.write_text(s)
+p=r/'assets/iris/iris-reference/inline-demo.html';s=p.read_text().replace('>AIRIS<','>Iris<').replace('iris-inline-demo.css?v=1','iris-inline-demo.css?v=2').replace('iris-inline-demo.js?v=1','iris-inline-demo.js?v=2');p.write_text(s)
+p=r/'portfolio-ja-data.json';import json
+d=json.loads(p.read_text());d.update({'Interactive design prototype · Try suggested tasks, findings and planning options here · Simulated data':'インタラクティブな設計プロトタイプ。このページで質問・問題確認・プラン比較を操作できます。データは架空です。','Select a data card to edit a field and save the change here · Simulated data':'データカードを選ぶと編集画面が開き、このページ内で変更を保存できます。データは架空です。','Select Plan A, B or C to compare and apply a simulated scenario here. Success rates are illustrative, not measured outcomes.':'プランA・B・Cを選び、このページ内で比較・適用できます。成功確率は説明用の架空データです。','Ask a question, authorize data access, and continue in this panel · Simulated data':'質問からデータアクセスの許可、その後の回答まで、このパネル内で操作できます。データは架空です。'});p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
+p=r/'portfolio-ja.js';p.write_text(p.read_text().replace('portfolio-ja-data.json?v=6','portfolio-ja-data.json?v=7'))
+for p in r.glob('*.html'):
+ s=p.read_text();n=s.replace('portfolio-ja.js?v=6','portfolio-ja.js?v=7')
+ if n!=s:p.write_text(n)
+PY

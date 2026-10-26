@@ -1,0 +1,185 @@
+/* Portfolio shell. Project artwork and embedded product interfaces keep their own identities. */
+:root{--pf-paper:#fff;--pf-ink:#171717;--pf-muted:#626262;--pf-surface:#f4f4f3;--pf-font:"Helvetica Neue",Helvetica,Arial,sans-serif;--pf-edge:32px;--pf-content:1320px;--pf-display:clamp(44px,5.5vw,80px);--pf-heading:clamp(26px,2.6vw,38px);--pf-body:17px;--pf-small:14px;--pf-ease:cubic-bezier(.22,.68,.16,1)}
+html{background:var(--pf-paper);scroll-behavior:smooth;scroll-padding-top:120px}
+body.portfolio-page{--ink:var(--pf-ink);--paper:var(--pf-paper);--muted:var(--pf-muted);--sans:var(--pf-font);--serif:var(--pf-font);--mono:var(--pf-font);margin:0;background:var(--pf-paper)!important;color:var(--pf-ink);font:var(--pf-body)/1.65 var(--pf-font);-webkit-font-smoothing:antialiased}
+body.portfolio-page::before{display:none!important}
+.portfolio-page :where(h1,h2,h3,h4,p,span,dt,dd,b,strong,small,a,button,summary,li,figcaption){font-family:var(--pf-font)!important}
+.portfolio-page :where(a,button,summary){-webkit-tap-highlight-color:transparent}
+.portfolio-page :where(a,button,summary):focus-visible{outline:2px solid var(--pf-ink)!important;outline-offset:5px}
+.portfolio-page :where(button,a,summary){transition:color 180ms ease,opacity 180ms ease}
+.portfolio-page :where(button){cursor:pointer}
+.portfolio-page :where(h1,h2,h3,h4){font-weight:400;text-wrap:balance}
+.portfolio-page :where(p,li){text-wrap:pretty}
+.portfolio-page .skip-link{background:#fff;color:var(--pf-ink);font-size:var(--pf-small)}
+/* One navigation treatment across the homepage, visual gallery and case studies. */
+.portfolio-page .unified-nav{position:fixed;inset:0 0 auto;z-index:30;height:96px;padding:26px var(--pf-edge);display:flex;justify-content:flex-start;align-items:flex-start;gap:28px;border:0;background:#fff;color:var(--pf-ink);font-size:16px;line-height:1.5;box-shadow:none}
+.portfolio-page .unified-nav .name,.portfolio-page .unified-nav .portfolio-brand{display:block;width:auto;height:auto;margin:0 auto 0 0;font-size:16px;font-weight:400;line-height:1.5;letter-spacing:-.01em}
+.site-role{display:block;font-size:16px;line-height:1.5;font-weight:400}
+.portfolio-page .unified-nav .back,.portfolio-page .unified-nav .nav-index,.portfolio-page .unified-nav .nav-about{font-size:16px;line-height:1.5;font-weight:400;letter-spacing:0;text-transform:none;min-height:44px;padding:0;white-space:nowrap}
+.portfolio-page .unified-nav .back span{display:none}
+.portfolio-page .unified-nav .count{display:none}
+.portfolio-page .case-nav-tools{display:flex;align-items:flex-start;gap:20px;order:5}
+.portfolio-page .case-language-switch{display:flex;gap:12px;font:14px/1.5 var(--pf-font);border:0;padding:0}
+.portfolio-page .case-language-switch button{font:inherit;padding:0;min-height:32px;border:0;background:none;color:var(--pf-muted)}
+.portfolio-page .case-language-switch button[aria-pressed=true]{color:var(--pf-ink);text-decoration:underline;text-underline-offset:6px}
+.portfolio-page .unified-nav a:hover{opacity:.6}
+/* Project names lead. The original proposition remains a readable statement. */
+body.portfolio-case .case-hero{display:block;min-height:0;max-width:var(--pf-content);margin:0 auto;padding:156px var(--pf-edge) 80px;background:none!important}
+body.portfolio-case .case-hero h1{font:400 var(--pf-display)/1.02 var(--pf-font);letter-spacing:-.055em;max-width:none;margin:0 0 24px;color:var(--pf-ink)}
+body.portfolio-case .case-statement{font:400 clamp(23px,2.1vw,30px)/1.3 var(--pf-font);letter-spacing:-.025em;max-width:48ch;margin:0 0 24px}
+body.portfolio-case .case-hero .case-context{font:var(--pf-small)/1.6 var(--pf-font);letter-spacing:0;text-transform:none;color:var(--pf-muted);margin:0 0 48px}
+body.portfolio-case .hero-deck{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:8%;align-items:start}
+body.portfolio-case .hero-deck>p{font:var(--pf-body)/1.65 var(--pf-font);max-width:58ch;margin:0}
+body.portfolio-case .fact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 32px;border:0;margin:0}
+body.portfolio-case .fact-grid>div{padding:0;border:0;min-width:0}
+body.portfolio-case .fact-grid dt{font:var(--pf-small)/1.5 var(--pf-font);color:var(--pf-muted);text-transform:none;letter-spacing:0}
+body.portfolio-case .fact-grid dd{font:16px/1.5 var(--pf-font);color:var(--pf-ink);margin:8px 0 0;overflow-wrap:break-word}
+body.portfolio-case .advisor-ownership{font:var(--pf-small)/1.6 var(--pf-font);max-width:78ch;margin:36px 0 0;color:var(--pf-muted)}
+/* A quiet, common reading frame instead of a separate theme for every project. */
+body.portfolio-case .case-section{content-visibility:visible;contain-intrinsic-size:none;max-width:var(--pf-content);margin:0 auto;padding:90px var(--pf-edge);border:0;background:#fff!important;color:var(--pf-ink)!important;scroll-margin-top:124px}
+body.portfolio-case .section-grid{display:block;grid-template-columns:minmax(0,1fr);gap:0}
+body.portfolio-case .section-title{position:static;max-width:none;margin:0 0 36px}
+body.portfolio-case .section-title .index{font:var(--pf-small)/1.5 var(--pf-font);text-transform:none;letter-spacing:0;color:var(--pf-muted);margin:0 0 16px}
+body.portfolio-case .section-title h2{font:400 var(--pf-heading)/1.14 var(--pf-font);letter-spacing:-.035em;max-width:32ch;margin:0;color:var(--pf-ink)}
+body.portfolio-case .prose{width:100%;max-width:none;min-width:0}
+body.portfolio-case .prose>p{font:var(--pf-body)/1.65 var(--pf-font);max-width:68ch;margin:0 0 24px;color:var(--pf-ink)}
+body.portfolio-case .prose>.lead{font:400 23px/1.5 var(--pf-font);letter-spacing:-.015em;max-width:60ch;margin:0 0 30px;color:var(--pf-ink)}
+body.portfolio-case .prose h3{font:400 24px/1.25 var(--pf-font);letter-spacing:-.025em;margin:44px 0 20px;color:var(--pf-ink)}
+body.portfolio-case .prose h4{font:400 20px/1.3 var(--pf-font);letter-spacing:-.02em;color:var(--pf-ink)}
+body.portfolio-case .prose :is(ul,ol){font-size:var(--pf-body);line-height:1.65;color:var(--pf-ink)}
+body.portfolio-case :is(.problem-grid,.decision-grid){gap:32px;margin:40px 0}
+body.portfolio-case :is(.problem-grid,.decision-grid)>article{border:0;border-radius:0;box-shadow:none;background:var(--pf-surface);padding:24px;min-height:0}
+body.portfolio-case :is(.problem-grid,.decision-grid) b{font:var(--pf-small)/1.5 var(--pf-font);color:var(--pf-muted);text-transform:none;letter-spacing:0;margin-bottom:24px}
+body.portfolio-case :is(.problem-grid,.decision-grid) h3{font-size:23px;line-height:1.25;margin:0 0 16px}
+body.portfolio-case :is(.problem-grid,.decision-grid) p{font-size:16px;line-height:1.6;color:var(--pf-ink)}
+body.portfolio-case .callout{margin:36px 0;padding:28px;border:0;border-radius:0;background:var(--pf-surface)!important;color:var(--pf-ink)}
+body.portfolio-case .callout p{font:20px/1.5 var(--pf-font);max-width:65ch;color:var(--pf-ink)}
+body.portfolio-case .case-brief{max-width:var(--pf-content);margin:0 auto;padding:0 var(--pf-edge) 64px;gap:32px;border:0;background:#fff;grid-template-columns:repeat(4,minmax(0,1fr))}
+body.portfolio-case .case-brief article:nth-child(n){min-height:0;border:0;padding:0;background:none;justify-content:flex-start}
+body.portfolio-case .case-brief article>span{font:var(--pf-small)/1.5 var(--pf-font);color:var(--pf-muted);text-transform:none}
+body.portfolio-case .case-brief p{font:16px/1.6 var(--pf-font);margin:18px 0 0;color:var(--pf-ink)}
+/* All existing chapter builders keep their IDs and scroll tracking. */
+body.portfolio-case main.chapter-layout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:64px;max-width:var(--pf-content);padding:64px var(--pf-edge) 0;margin:auto;align-items:start}
+body.portfolio-case .chapter-directory{position:sticky;top:125px;max-height:calc(100svh - 155px);padding:0 12px 0 0;overflow-y:auto;background:#fff;z-index:2}
+body.portfolio-case .chapter-directory a,body.portfolio-case .chapter-directory a[aria-current]{display:block;padding:12px 0;margin:0;color:var(--pf-muted);border:0}
+body.portfolio-case .chapter-directory .directory-label{display:none}
+body.portfolio-case .chapter-directory .directory-title,body.portfolio-case .chapter-directory a[aria-current] .directory-title{font:16px/1.45 var(--pf-font);letter-spacing:-.01em;color:inherit;transition:none}
+body.portfolio-case .chapter-directory a[aria-current]{color:var(--pf-ink)}
+body.portfolio-case .chapter-directory a[aria-current] .directory-title{text-decoration:underline;text-underline-offset:5px}
+body.portfolio-case .chapter-content{min-width:0}
+body.portfolio-case .chapter-content>.case-section{max-width:none;padding:0 0 100px;margin:0;scroll-margin-top:125px}
+body.portfolio-case .chapter-content .section-title{display:block;position:static}
+body.portfolio-case .wasabi-chapters{max-width:var(--pf-content);margin:0 auto;display:flex;flex-wrap:wrap;gap:28px;padding:24px var(--pf-edge);border:0;font:16px/1.5 var(--pf-font);background:#fff}
+/* Source images keep their original colors, proportions, crops and order. */
+body.portfolio-case :is(.media-wide,.media-pair figure,.case-cover,.crm-source-full,.crm-source-zoom,.advisor-deck-figure,.video-shell,.wasabi-cover){box-shadow:none;border-radius:0;border:0}
+body.portfolio-case :is(.media-wide>img,.media-pair figure>img,.case-cover>img,.advisor-deck-figure>img,.video-shell>video){border-radius:0;box-shadow:none;border:0;background:var(--pf-surface)}
+body.portfolio-case :is(.caption,figcaption,.source-note,.wasabi-small,.wasabi-original-caption){font:var(--pf-small)/1.55 var(--pf-font);letter-spacing:0;text-transform:none;color:var(--pf-muted)}
+body.portfolio-case .advisor-brand-showcase{max-width:var(--pf-content);padding:0 var(--pf-edge) 48px;margin:0 auto}
+body.portfolio-case .advisor-brand-window{background:var(--pf-surface);border-radius:0}
+body.portfolio-case .advisor-brand-window::after{display:none}
+body.portfolio-case .advisor-brand-card{border-radius:0}
+body.portfolio-case .advisor-brand-showcase>figcaption{font:var(--pf-small)/1.55 var(--pf-font);color:var(--pf-muted)}
+body.portfolio-case .brand-motion-toggle{border:0;text-decoration:underline;text-underline-offset:5px;color:var(--pf-ink)}
+body.portfolio-case .wasabi-cover{max-width:var(--pf-content);margin:0 auto;padding:0 var(--pf-edge) 48px;background:#fff}
+body.portfolio-case .wasabi-cover img{border-radius:0}
+body.portfolio-case :is(.mde-art-opening,.iris-opening){max-width:var(--pf-content);margin:0 auto;padding-inline:var(--pf-edge);background:none}
+/* Supplemental evidence shares one restrained expandable treatment. */
+body.portfolio-case :is(.advisor-case-detail,.wasabi-evidence,.evidence-detail){border:0;background:var(--pf-surface);border-radius:0;padding:0 24px;margin:28px 0}
+body.portfolio-case :is(.advisor-case-detail,.wasabi-evidence,.evidence-detail)>summary{font:16px/1.5 var(--pf-font);padding:20px 0;color:var(--pf-ink);cursor:pointer}
+body.portfolio-case :is(.advisor-detail-body,.wasabi-source){font-size:16px;color:var(--pf-ink)}
+body.portfolio-case .advisor-snapshot-options :is(h3,p){color:var(--pf-ink)}
+body.portfolio-case .ownership-map>div{border:0;border-radius:0;background:var(--pf-surface);padding:22px;min-height:180px;color:var(--pf-ink)}
+body.portfolio-case .ownership-map :is(small,span){font-size:var(--pf-small);letter-spacing:0;text-transform:none;color:var(--pf-muted)}
+body.portfolio-case .ownership-map strong{font-size:20px;font-weight:400;color:var(--pf-ink)}
+body.portfolio-case .ownership-map i{color:var(--pf-muted)}
+body.portfolio-case .impact-strip{max-width:var(--pf-content);margin:auto;background:var(--pf-surface);color:var(--pf-ink)}
+body.portfolio-case .impact-strip>div{border:0;min-height:180px;padding:28px}
+body.portfolio-case .impact-strip :is(.impact-label,span){font:var(--pf-small)/1.5 var(--pf-font);text-transform:none;color:var(--pf-muted);letter-spacing:0}
+body.portfolio-case .impact-strip strong{font:400 44px/1.1 var(--pf-font);letter-spacing:-.04em;color:var(--pf-ink)}
+body.portfolio-case .disclaimer{margin:0 auto;max-width:var(--pf-content);padding:30px var(--pf-edge);font:var(--pf-small)/1.6 var(--pf-font);letter-spacing:0;text-transform:none;background:#fff;color:var(--pf-muted)}
+body.portfolio-case .next-case{max-width:var(--pf-content);margin:30px auto 0;padding:64px var(--pf-edge) 80px;background:var(--pf-surface);color:var(--pf-ink)}
+body.portfolio-case .next-case p{font:var(--pf-small)/1.5 var(--pf-font);text-transform:none;letter-spacing:0;margin:0 0 28px;color:var(--pf-muted)}
+body.portfolio-case .next-case a{font:400 clamp(32px,4vw,56px)/1.1 var(--pf-font);letter-spacing:-.045em;border:0;padding:0}
+body.portfolio-case .next-case a span{font-size:32px}
+/* Visual work stays image-led, with the same identity and typographic scale. */
+body.portfolio-visual .visual-case{padding:156px var(--pf-edge) 100px;max-width:var(--pf-content);grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);gap:64px}
+body.portfolio-visual .visual-intro{top:126px;padding:0;margin:0}
+body.portfolio-visual .visual-intro h1{font:400 clamp(40px,4.2vw,60px)/1.05 var(--pf-font);letter-spacing:-.05em;margin:0 0 32px}
+body.portfolio-visual .visual-intro p{font:var(--pf-body)/1.6 var(--pf-font);max-width:40ch;color:var(--pf-ink)}
+body.portfolio-visual .visual-intro :is(.visual-note,nav a,.visual-back){font-size:var(--pf-small);line-height:1.6}
+body.portfolio-visual .visual-section h2{font:400 23px/1.3 var(--pf-font);letter-spacing:-.025em}
+body.portfolio-visual .visual-images figcaption{font:var(--pf-small)/1.55 var(--pf-font);color:var(--pf-muted)}
+body.portfolio-visual .visual-images img{border-radius:0;box-shadow:none}
+body.portfolio-visual .visual-collection{padding:156px var(--pf-edge) 100px;max-width:var(--pf-content);margin:auto}
+body.portfolio-visual .visual-collection-intro h1,body.portfolio-visual .visual-collection.visual-carousel .visual-collection-intro h1{font:400 var(--pf-display)/1.02 var(--pf-font);letter-spacing:-.055em;margin:0 0 24px}
+body.portfolio-visual .visual-collection-intro p{font:var(--pf-body)/1.6 var(--pf-font)}
+body.portfolio-visual .visual-collection-intro{margin-bottom:64px}
+body.portfolio-visual .visual-gallery-tools{font:16px/1.5 var(--pf-font)}
+body.portfolio-visual .visual-collection .card-caption h2{font:400 20px/1.3 var(--pf-font);letter-spacing:-.025em}
+body.portfolio-visual .visual-collection-footer{max-width:var(--pf-content);margin:auto;padding:40px var(--pf-edge);font:16px/1.5 var(--pf-font);color:var(--pf-ink)}
+@media(max-width:1000px){body.portfolio-case main.chapter-layout{grid-template-columns:190px minmax(0,1fr);gap:40px}body.portfolio-case .case-brief{grid-template-columns:repeat(2,minmax(0,1fr))}body.portfolio-visual .visual-case{gap:40px}}
+@media(max-width:700px){:root{--pf-edge:20px;--pf-body:16px;--pf-display:44px;--pf-heading:26px}html{scroll-padding-top:112px}.portfolio-page .unified-nav{height:96px;padding:20px var(--pf-edge);gap:18px}.portfolio-page .unified-nav .name,.portfolio-page .unified-nav .portfolio-brand,.site-role{font-size:13px}.portfolio-page .unified-nav :is(.nav-index,.nav-about){font-size:14px}.portfolio-page .unified-nav .back{display:none}.portfolio-page .case-nav-tools{display:none}body.portfolio-case .case-hero{padding-top:136px;padding-bottom:56px}body.portfolio-case .case-statement{font-size:23px}body.portfolio-case .case-hero .case-context{margin-bottom:32px}body.portfolio-case .hero-deck{grid-template-columns:1fr;gap:32px}body.portfolio-case .fact-grid{gap:24px 20px}body.portfolio-case .fact-grid dd{font-size:16px}body.portfolio-case .case-brief{grid-template-columns:1fr;padding-bottom:40px;gap:28px}body.portfolio-case .case-section{padding:56px var(--pf-edge)}body.portfolio-case .section-title h2{font-size:26px;max-width:none}body.portfolio-case .prose>.lead{font-size:21px}body.portfolio-case .prose h3{font-size:23px}body.portfolio-case :is(.problem-grid,.decision-grid){grid-template-columns:1fr;gap:20px}body.portfolio-case main.chapter-layout{display:block;padding:16px var(--pf-edge) 0}body.portfolio-case .chapter-directory{position:static;display:grid;grid-template-columns:1fr 1fr;gap:0 24px;max-height:none;overflow:visible;padding:0;margin:0 0 48px}body.portfolio-case .chapter-directory a,body.portfolio-case .chapter-directory a[aria-current]{padding:10px 0;flex:auto}body.portfolio-case .chapter-directory .directory-title,body.portfolio-case .chapter-directory a[aria-current] .directory-title{font-size:14px;line-height:1.5}body.portfolio-case .chapter-content>.case-section{padding-bottom:64px;scroll-margin-top:112px}body.portfolio-case .section-title{margin-bottom:28px}body.portfolio-case .wasabi-chapters{gap:16px 24px;font-size:14px}body.portfolio-case .impact-strip{grid-template-columns:1fr 1fr}body.portfolio-case .impact-strip>div{min-height:150px;padding:22px}body.portfolio-case .impact-strip strong{font-size:36px}body.portfolio-case .advisor-brand-showcase,body.portfolio-case .wasabi-cover{padding-inline:var(--pf-edge)}body.portfolio-case .advisor-brand-showcase>figcaption{font-size:14px}body.portfolio-case :is(.advisor-case-detail,.wasabi-evidence,.evidence-detail){padding-inline:18px}body.portfolio-case .next-case{padding-block:44px 56px}body.portfolio-visual .visual-case{display:block;padding:136px var(--pf-edge) 64px}body.portfolio-visual .visual-intro{position:static;margin-bottom:56px}body.portfolio-visual .visual-intro h1{font-size:42px}body.portfolio-visual .visual-images{gap:28px}body.portfolio-visual .visual-collection{padding:136px var(--pf-edge) 64px}body.portfolio-visual .visual-collection-intro{margin-bottom:48px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.portfolio-page *, .portfolio-page *::before,.portfolio-page *::after{scroll-behavior:auto!important;transition:none!important}}
+/* Explicitly match the old page-scoped rules, which otherwise out-rank a generic shell. */
+body.portfolio-page .unified-nav{background:#fff!important;border:0}
+body.portfolio-case .section-title .index{display:none}
+body.portfolio-case .next-case>p{display:none}
+body.portfolio-case .prose :is(p,li){font-size:16px;line-height:1.65;max-width:68ch}
+body.portfolio-case .prose>.lead{font-size:23px;line-height:1.5;max-width:60ch}
+body.portfolio-case :is(figcaption,.caption,.source-note,.wasabi-small,.wasabi-original-caption,.advisor-option-label,.advisor-test-method,.advisor-option-grid span){font-size:14px!important;line-height:1.55!important;text-transform:none;letter-spacing:0}
+body.portfolio-case details:not([open])>:not(summary){display:none!important}
+body.portfolio-case .prose :is(.advisor-test-decision,.advisor-test-findings) h3{font-size:23px;line-height:1.3}
+@media(max-width:700px){body.portfolio-case .prose>.lead{font-size:21px}body.portfolio-case .prose h3,body.portfolio-case .prose .advisor-test-decision h3{font-size:21px;line-height:1.35}}
+body.portfolio-case .prose :where(span,small,dt,dd,b,figcaption):not([data-ui] *){font-size:max(14px,1em)!important}
+body.portfolio-case .source-note{border:0;padding-left:0}
+body.portfolio-case .moon-detail-copy>span{display:none}
+body.portfolio-case .wasabi-role-flow>div{background:var(--pf-surface);color:var(--pf-ink)}
+body.portfolio-case .wasabi-role-flow>p{font-size:14px!important;line-height:1.5}
+body.portfolio-case .wasabi-wireframe{font-size:14px}
+body.portfolio-case .wasabi-wireframe span{font-size:14px!important}
+body.portfolio-case .wasabi-redacted>p{font-size:13px!important}
+body.portfolio-case [data-ui]{font-family:Arial,sans-serif}
+body.portfolio-case [data-ui] :where(h1,h2,h3,h4,p,span,dt,dd,b,strong,small,a,button,summary,li,figcaption){font-family:inherit!important}
+@media(max-width:700px){body.portfolio-case .section-title h2{font-size:24px}}
+/* Supporting diagrams use the portfolio's neutral surfaces; artwork and UI frames are excluded. */
+body.portfolio-case :is(.crm-verified-thesis,.architecture-map,.crm-v-flow,.express-path,.tax-journey,.mode-switch,.module-board,.journey-lanes,.measurement-grid,.process-line,.experience-pair){background:var(--pf-surface);color:var(--pf-ink);border:0;border-radius:0;box-shadow:none}
+body.portfolio-case :is(.crm-verified-thesis,.architecture-map,.crm-v-flow,.express-path,.tax-journey,.mode-switch,.module-board,.journey-lanes,.measurement-grid,.process-line,.experience-pair)>:is(div,span,strong,article){border:0;border-radius:0;background:transparent;color:inherit;box-shadow:none}
+body.portfolio-case :is(.crm-verified-thesis,.architecture-map,.crm-v-flow,.express-path,.tax-journey,.module-board,.journey-lanes,.measurement-grid,.process-line) :is(span,small,b,dt,dd){font-size:14px;letter-spacing:0;text-transform:none;color:inherit}
+body.portfolio-case :is(.crm-verified-thesis,.architecture-map,.crm-v-flow) i{font-style:normal;font-size:18px;color:var(--pf-muted)}
+body.portfolio-case .crm-decision-list,body.portfolio-case .crm-decision-list p{border:0;background:none}
+body.portfolio-case .crm-decision-list p{gap:24px;padding:18px 0;font-size:16px;max-width:68ch}
+body.portfolio-case .crm-source-zoom figcaption{border:0;background:#fff;color:var(--pf-muted)}
+body.portfolio-case .crm-source-zoom figcaption b{color:var(--pf-ink)}
+body.portfolio-case .architecture-map header{border:0}
+body.portfolio-case .wasabi-role-flow strong{font-size:24px;line-height:1.2;color:var(--pf-ink)}
+body.portfolio-case .wasabi-role-flow span{font-size:16px!important}
+body.portfolio-case .prose .evidence-step :is(b,small){font-size:14px;letter-spacing:0;text-transform:none}
+body.portfolio-case :is(.iris-flow,.iris-questions>div,.iris-note){border:0;background:var(--pf-surface);padding:24px;color:var(--pf-ink);border-radius:0}
+body.portfolio-case .iris-flow{gap:28px}
+body.portfolio-case .iris-source{font-size:14px!important;line-height:1.6;color:var(--pf-muted)}
+body.portfolio-case .iris-source a{font-size:inherit}
+body.portfolio-case :is(.iris-demo,.iris-opening) iframe{border:0;border-radius:0;background:var(--pf-surface)}
+@media(max-width:700px){body.portfolio-case .impact-strip{grid-template-columns:repeat(3,minmax(0,1fr))}body.portfolio-case .impact-strip>div{padding:18px 12px;min-height:150px;gap:16px}body.portfolio-case .impact-strip>div:first-child{grid-column:1/-1;min-height:0;padding:24px 20px}body.portfolio-case .impact-strip>div:first-child strong{font-size:23px;line-height:1.3}}
+body.portfolio-case .prose :where(header,figcaption,li,article,section,div):not([data-ui]):not([data-ui] *){border:0!important;box-shadow:none}
+body.portfolio-case :is(.visual-draft,.visual-draft>header,.visual-draft>figcaption,.module-list li,.mode-rail,.mode-rail>*,.prospect-principles,.measurement-grid,.measurement-grid>div,.strategy-principles>div,.process-line>div){border:0!important;border-radius:0;box-shadow:none}
+body.portfolio-case .visual-draft{background:none}
+body.portfolio-case .visual-draft>header{font:14px/1.5 var(--pf-font);letter-spacing:0;text-transform:none}
+body.portfolio-case .visual-draft>header :is(span,b,small){font:inherit}
+body.portfolio-case :is(.tax-journey,.module-board,.journey-lanes,.mode-switch,.mode-rail,.prospect-principles,.strategy-principles,.measurement-grid,.experience-pair,.process-line) :where(p,span,b,strong,small,li):not([data-ui] *){color:var(--pf-ink)!important}
+body.portfolio-case :is(.mode-rail,.mode-rail>*,.module-list li,.lane-label,.prospect-principles,.evidence-step,.measurement-grid){font-size:16px;line-height:1.6;text-transform:none;letter-spacing:0}
+body.portfolio-case .tax-journey>div{display:flex;flex-direction:column;gap:18px}
+body.portfolio-case .tax-journey>div>small{order:2;font-size:14px}
+body.portfolio-case .tax-journey>div>strong{order:1}
+body.portfolio-case .tax-journey>div>p{order:3}
+@media(max-width:700px){body.portfolio-case .impact-strip>div{padding-inline:20px}}
+body.portfolio-case .visual-draft>header>span{font-size:14px!important;line-height:1.5!important;letter-spacing:0!important;text-transform:none!important;color:var(--pf-muted)}
+body.portfolio-case .prospect-principles>p{border:0!important}
+body.portfolio-case :is(.module-head em,.module-head b,.module-list article>i,.mode-rail span,.mode-rail b){font-size:14px!important;line-height:1.5;letter-spacing:0;text-transform:none;color:var(--pf-ink)!important}
+body.portfolio-case .module-list .muted{opacity:1;color:var(--pf-muted)}
+body.portfolio-case :where(small,figcaption,dt,dd,span):not([data-ui] *):not(.unified-nav *):not(.next-case *){font-size:max(14px,1em)!important}
+body.portfolio-case .visual-draft figcaption small{color:var(--pf-muted)}
+body.portfolio-case .visual-draft figcaption strong{font-size:14px!important;color:var(--pf-ink)}
+body.portfolio-case .journey-lanes>div{font:16px/1.6 var(--pf-font);color:var(--pf-ink)}
+
+.portfolio-page .unified-nav .nav-resume{font-size:16px;white-space:nowrap}
+@media(max-width:700px){.portfolio-page .unified-nav .nav-resume{font-size:14px}.portfolio-page .unified-nav{gap:16px}}

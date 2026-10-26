@@ -1,0 +1,9 @@
+[data-wasabi-motion]{position:relative}
+[data-wasabi-motion] video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;pointer-events:none}
+[data-wasabi-motion].motion-playing video{opacity:1}
+.work-card.wasabi:hover img{transform:none}
+.wasabi-cover[data-wasabi-motion]{padding:0;margin:0 5vw 64px}
+.wasabi-cover[data-wasabi-motion] video{object-fit:fill}
+.wasabi-cover[data-wasabi-motion]:focus-visible{outline:2px solid #062b23;outline-offset:6px}
+@media(max-width:700px){.wasabi-cover[data-wasabi-motion]{margin:0 0 35px}}
+@media(prefers-reduced-motion:reduce){[data-wasabi-motion] video{display:none}}

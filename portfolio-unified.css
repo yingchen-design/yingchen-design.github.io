@@ -1,0 +1,64 @@
+/* Shared case-study typography. Product artwork retains its own design. */
+body.portfolio-case{--case-display:clamp(50px,7.2vw,104px);--case-section:48px;--case-subheading:28px;--case-body:18px;--case-note:14px}
+body.portfolio-case:not(.advisor-no-directory) .case-hero h1{font-size:var(--case-display);font-weight:700;line-height:1.04;letter-spacing:-.05em}
+body.portfolio-case:not(.advisor-no-directory) .case-statement{font-size:var(--case-subheading);font-weight:400;line-height:1.4}
+body.portfolio-case:not(.advisor-no-directory) .section-title{display:block;margin-bottom:32px!important}
+body.portfolio-case:not(.advisor-no-directory) .section-title h2{font-size:var(--case-section);font-weight:700;line-height:1.15;letter-spacing:-.035em;max-width:30ch}
+body.portfolio-case:not(.advisor-no-directory) .prose h3{font-size:var(--case-subheading);font-weight:700;line-height:1.25;margin:40px 0 20px}
+body.portfolio-case:not(.advisor-no-directory) :is(.hero-deck>p,.prose p,.prose>.lead){font-size:var(--case-body);font-weight:400;line-height:1.6;max-width:72ch}
+body.portfolio-case:not(.advisor-no-directory) :is(figcaption,.caption,.caption span,.case-context,.fact-grid dt){font-size:var(--case-note);line-height:1.5}
+body.portfolio-case:not(.advisor-no-directory) .fact-grid dd{font-size:var(--case-body);line-height:1.5}
+body.portfolio-case:not(.advisor-no-directory) .case-section{padding-block:64px}
+body.portfolio-case:not(.advisor-no-directory) :is(.evidence-detail,.advisor-case-detail)>summary{font-size:var(--case-body);padding:20px 24px;background:#f4f4f3;border:0}
+.overview-instruction,.advisor-compare-help,[data-copy="drag"]{display:none!important}
+.language-switch{display:flex;align-items:center;gap:10px;white-space:nowrap;margin-left:12px;font-size:14px;line-height:1.5}.language-switch a{min-height:40px;display:inline-flex;align-items:center;color:#626262}.language-switch a[aria-current]{color:#171717;font-weight:700}.language-switch a:focus-visible{outline:2px solid #171717;outline-offset:4px}
+html[lang=ja] body{font-family:"Helvetica Neue",Arial,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif}
+html[lang=ja] :is(h1,h2,h3){line-height:1.3!important;letter-spacing:-.025em!important;overflow-wrap:anywhere}
+html[lang=ja] body.portfolio-case .section-title h2{font-size:40px!important}
+html[lang=ja] .overview-copy :is(h2,h3){font-size:40px!important}
+@media(max-width:700px){body.portfolio-case{--case-display:50px;--case-section:32px;--case-subheading:24px;--case-body:16px;--case-note:14px}body.portfolio-case:not(.advisor-no-directory) .section-title{margin-bottom:24px!important}body.portfolio-case:not(.advisor-no-directory) .prose h3{margin-bottom:16px}body.portfolio-case:not(.advisor-no-directory) .case-section{padding-block:40px}.language-switch{gap:8px;margin-left:0;font-size:13px}.home-header nav{gap:14px!important}.unified-nav{gap:16px!important}html[lang=ja] body.portfolio-case .section-title h2,html[lang=ja] .overview-copy :is(h2,h3){font-size:30px!important}}
+@media print{.language-switch{display:none}}
+/* Japanese typesetting: strict kinsoku, natural spacing and semantic heading chunks. */
+html[lang=ja] body{line-break:strict;word-break:normal;overflow-wrap:break-word}
+html[lang=ja] :is(h1,h2,h3){letter-spacing:0!important;overflow-wrap:normal;word-break:normal;line-break:strict}
+html[lang=ja] :is(.prose p,.hero-deck>p,.overview-copy>p,.resume-summary>p,.resume-job li,.job-intro){line-height:1.85!important;letter-spacing:.015em}
+html[lang=ja] .prose>p{max-width:42em!important}
+html[lang=ja] .ja-phrase{display:inline-block;white-space:nowrap;max-width:100%}
+html[lang=ja] .resume-section>h2{align-self:start;line-height:1.5!important}
+html[lang=ja] :is(.fact-grid dd,.job-date,.caption,figcaption){line-break:strict;overflow-wrap:normal;word-break:normal}
+@media(max-width:700px){html[lang=ja] :is(.section-title h2,.prose h3,.overview-static-stage h3){max-width:none!important}html[lang=ja] :is(.prose h3,.overview-static-stage h3){font-size:24px!important;line-height:1.45!important}html[lang=ja] .ja-phrase{white-space:normal;word-break:keep-all}}
+html[lang=ja] :is(.prose p,.hero-deck>p,.resume-job li,.job-intro){text-wrap:pretty}
+
+/* Align navigation and language links by their first text baseline. */
+.portfolio-page .unified-nav{align-items:baseline}
+.portfolio-page .unified-nav .language-switch{align-items:baseline;line-height:1.5}
+.portfolio-page .unified-nav .language-switch a{display:block;min-height:44px;padding:0}
+
+.home-header nav{align-items:baseline}
+.home-header nav .language-switch{align-items:baseline}
+.home-header nav .language-switch a{display:block;min-height:44px;padding:0}
+
+/* Offer the alternate language once, rather than emphasizing the current one. */
+.language-switch a[aria-current]{display:none!important}
+.language-switch a{font-weight:400;color:#626262}
+
+/* Shared access without changing the visual hierarchy. */
+.site-skip{position:fixed;top:10px;left:20px;z-index:1000;padding:12px 18px;background:#171717;color:#fff;transform:translateY(-180%)}
+.site-skip:focus{transform:none}
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid #171717!important;outline-offset:5px!important}
+main:focus{outline:none}main,[id]{scroll-margin-top:112px}
+.home-motion-toggle,.site-motion-toggle{font:14px/1.5 "Helvetica Neue",Arial,sans-serif;min-height:44px;background:none;border:0;padding:8px 0;color:#626262;cursor:pointer}
+.home-motion-toggle{display:block;margin-left:auto}.site-motion-toggle{display:block;margin:12px 0 0 auto}
+.site-motion-paused *, .site-motion-paused *::before,.site-motion-paused *::after{animation-play-state:paused!important}
+dialog{overscroll-behavior:contain}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+
+/* One Latin/Japanese font stack for all Japanese portfolio text. */
+html[lang=ja]{--pf-font:"Helvetica Neue",Helvetica,Arial,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-family:var(--pf-font)}
+html[lang=ja] body.portfolio-page{font-family:var(--pf-font)}
+html[lang=ja] .portfolio-page :where(h1,h2,h3,h4,h5,h6,p,span,div,section,article,header,footer,nav,dt,dd,b,strong,em,small,a,button,input,select,textarea,summary,li,figcaption,label,time,td,th):not([data-ui] *){font-family:var(--pf-font)!important}
+
+/* Text entrance only: no blur, reflow, or character splitting. */
+body.portfolio-case [data-text-pending]{opacity:0}
+@media print{body.portfolio-case [data-text-pending]{opacity:1!important;transform:none!important}}
+@media(prefers-reduced-motion:reduce){body.portfolio-case [data-text-pending]{opacity:1!important;transform:none!important}}

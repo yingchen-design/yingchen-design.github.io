@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+  <title id="title">Tang aperture mark</title>
+  <desc id="desc">A constructed overlapping mark with an upward-facing aperture.</desc>
+  <defs>
+    <clipPath id="body"><path d="M104 32H216a72 72 0 0 1 72 72v112a72 72 0 0 1-72 72H32V104a72 72 0 0 1 72-72Z"/></clipPath>
+  </defs>
+  <g clip-path="url(#body)">
+    <path d="M104 32H216a72 72 0 0 1 72 72v112a72 72 0 0 1-72 72H32V104a72 72 0 0 1 72-72Z" fill="#B95F4B"/>
+    <circle cx="205" cy="134" r="142" fill="#405B8D" style="mix-blend-mode:multiply"/>
+  </g>
+  <path d="M32 246c54-62 119-103 196-124-10 56-42 96-96 120-37 17-70 32-100 46Z" fill="#EEEAE1"/>
+  <path d="M32 205c36 14 69 26 100 37-37 20-70 35-100 46Z" fill="#B95F4B"/>
+  <circle cx="239" cy="88" r="14" fill="#C49A4B"/>
+</svg>

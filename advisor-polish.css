@@ -1,0 +1,116 @@
+/* Advisor case: one editorial frame, real product evidence. */
+body.advisor-no-directory{--case-edge:clamp(24px,4.5vw,64px);--case-ink:#171717;--case-note:#626262;--case-surface:#f4f4f3}
+body.advisor-no-directory .case-hero{max-width:1376px;padding:144px var(--case-edge) 32px}
+body.advisor-no-directory .case-hero h1{letter-spacing:-.05em;margin-bottom:20px}
+body.advisor-no-directory .case-statement{line-height:1.25;max-width:40ch}
+body.advisor-no-directory .case-hero .case-context{margin-bottom:32px}
+body.advisor-no-directory .hero-deck{gap:64px;grid-template-columns:1.1fr 1fr}
+body.advisor-no-directory .hero-deck>p{line-height:1.6;max-width:56ch}
+body.advisor-no-directory .fact-grid{gap:24px 32px}
+body.advisor-no-directory .fact-grid :is(dt,dd){line-height:1.5}
+body.advisor-no-directory .case-section{padding:64px var(--case-edge)!important}
+body.advisor-no-directory .section-title{margin-bottom:28px!important}
+body.advisor-no-directory .section-title h2{line-height:1.12;letter-spacing:-.035em;max-width:30ch!important}
+body.advisor-no-directory .prose>.lead{line-height:1.45;max-width:65ch;margin:0 0 32px}
+body.advisor-no-directory .prose>p{line-height:1.6;max-width:72ch;color:var(--case-ink)}
+body.advisor-no-directory .prose h3{line-height:1.22;letter-spacing:-.025em;max-width:42ch;margin:40px 0 20px}
+body.advisor-no-directory .overview-lab{margin-top:0}
+body.advisor-no-directory #advisor-chapter-01{padding-top:0!important}
+body.advisor-no-directory #advisor-chapter-01 .section-title{display:none}
+body.advisor-no-directory .overview-pin{padding:28px 0;justify-content:center;min-height:calc(100svh - 108px);background:transparent}
+body.advisor-no-directory .overview-content{grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:48px}
+body.advisor-no-directory .overview-copy{min-height:0}
+body.advisor-no-directory .overview-copy :is(h2,h3){max-width:22ch}
+body.advisor-no-directory .overview-copy>p{color:var(--case-ink);line-height:1.6}
+body.advisor-no-directory #overview-issues li{line-height:1.5;color:#4c4c4c}
+body.advisor-no-directory :is(.overview-film figcaption,.caption,figcaption){line-height:1.5}
+body.advisor-no-directory .overview-instruction{margin-top:4px}
+body.advisor-no-directory .ownership-map{display:grid;grid-template-columns:1fr 1fr;gap:32px 48px;background:var(--case-surface);padding:36px;margin:32px 0 48px}
+body.advisor-no-directory .ownership-map>div{padding:0;min-height:0;background:none}
+body.advisor-no-directory .ownership-map small{color:var(--case-note)}
+body.advisor-no-directory .ownership-map strong{margin:10px 0;line-height:1.25}
+body.advisor-no-directory .ownership-map span{line-height:1.6;color:var(--case-ink)}
+body.advisor-no-directory .advisor-snapshot-options{display:block;margin:40px 0}
+body.advisor-no-directory .advisor-snapshot-options article{display:grid;grid-template-columns:.7fr 1.3fr;column-gap:40px;margin:36px 0;align-items:start}
+body.advisor-no-directory .advisor-snapshot-options h3{grid-column:1;margin:8px 0 16px;max-width:none}
+body.advisor-no-directory .advisor-snapshot-options p{grid-column:1;line-height:1.6;color:var(--case-ink)}
+body.advisor-no-directory .advisor-snapshot-options figure{grid-column:2;grid-row:1 / span 2;margin:0}
+body.advisor-no-directory .advisor-deck-figure img{border-radius:0}
+body.advisor-no-directory .advisor-compare-handle{background:#171717}
+body.advisor-no-directory .advisor-compare-handle span{background:#171717;box-shadow:none;width:44px;height:44px;}
+body.advisor-no-directory .advisor-compare-controls button{padding:8px 12px;background:var(--case-surface);}
+body.advisor-no-directory .advisor-compare-controls{gap:6px}
+body.advisor-no-directory :is(button,a,summary):focus-visible{outline:2px solid #171717;outline-offset:4px}
+body.advisor-no-directory .advisor-case-detail>summary{line-height:1.5;padding:20px 24px}
+body.advisor-no-directory .advisor-snapshot-video{margin:28px 0 36px}
+@media(max-width:1000px){body.advisor-no-directory .hero-deck{gap:32px}body.advisor-no-directory .overview-content{gap:28px;grid-template-columns:1fr 1.15fr}}
+@media(max-width:850px){body.advisor-no-directory .hero-deck{grid-template-columns:1fr}body.advisor-no-directory .hero-deck>p{max-width:65ch}body.advisor-no-directory .overview-content{grid-template-columns:1fr}body.advisor-no-directory .overview-film{order:-1}body.advisor-no-directory .overview-copy>p{max-width:none}body.advisor-no-directory .overview-copy :is(h2,h3){max-width:none}body.advisor-no-directory .overview-copy{max-width:none}}
+@media(max-width:700px),(max-height:650px){body.advisor-no-directory .overview-pin{min-height:0;display:block;padding:16px 0}body.advisor-no-directory .overview-content{display:grid;gap:24px}}
+@media(max-width:700px){body.advisor-no-directory{--case-edge:20px}body.advisor-no-directory .case-hero{padding:132px 20px 24px}body.advisor-no-directory .case-hero h1{}body.advisor-no-directory .hero-deck>p,body.advisor-no-directory .prose>p{}body.advisor-no-directory .case-section{padding:40px 20px!important}body.advisor-no-directory .section-title h2{max-width:none!important}body.advisor-no-directory .prose>.lead{line-height:1.5}body.advisor-no-directory .prose h3{line-height:1.25}body.advisor-no-directory .ownership-map{grid-template-columns:1fr;padding:24px;gap:28px}body.advisor-no-directory .advisor-snapshot-options article{display:block}body.advisor-no-directory .advisor-snapshot-options figure{margin-top:20px}body.advisor-no-directory .advisor-compare-controls{flex-wrap:wrap}body.advisor-no-directory .advisor-static-stage{padding-top:32px}}
+@media(prefers-reduced-motion:reduce){body.advisor-no-directory .overview-pin{min-height:0}body.advisor-no-directory *{scroll-behavior:auto!important}}
+
+@media(min-width:701px) and (max-width:850px){body.advisor-no-directory .overview-lab{height:auto}body.advisor-no-directory .overview-pin{position:relative;top:auto;min-height:0}body.advisor-no-directory .overview-static-stages{display:block}body.advisor-no-directory .overview-instruction{display:none}}
+/* Stronger title hierarchy requested by the portfolio owner. */
+body.advisor-no-directory .case-hero h1{letter-spacing:-.055em;line-height:1.02}
+body.advisor-no-directory .section-title h2{line-height:1.12;letter-spacing:-.035em;max-width:30ch!important}
+body.advisor-no-directory .overview-copy :is(h2,h3){line-height:1.12!important;letter-spacing:-.035em}
+body.advisor-no-directory .prose h3{line-height:1.2;letter-spacing:-.025em}
+body.advisor-no-directory .overview-static-stage h3{line-height:1.2}
+body.advisor-no-directory .advisor-snapshot-options h3{}
+body.advisor-no-directory .ownership-map strong{}
+body.advisor-no-directory .prose :is(.advisor-test-decision,.advisor-test-findings) h3{}
+body.advisor-no-directory .next-case h2{}
+body.advisor-no-directory :is(.hero-deck>p,.prose>p,.overview-copy>p){}
+@media(max-width:700px){
+ body.advisor-no-directory .case-hero h1{}
+ body.advisor-no-directory .section-title h2{}
+ body.advisor-no-directory .overview-copy :is(h2,h3){}
+ body.advisor-no-directory .prose h3,body.advisor-no-directory .overview-static-stage h3{}
+ body.advisor-no-directory .advisor-snapshot-options h3,body.advisor-no-directory .ownership-map strong,body.advisor-no-directory .prose :is(.advisor-test-decision,.advisor-test-findings) h3{}
+}
+/* Explicit spacing hierarchy; image height must not separate a title from its copy. */
+body.advisor-no-directory .case-section>.section-grid>.section-title{margin-bottom:32px!important}
+body.advisor-no-directory .case-section>.section-grid>.prose{margin-top:0}
+body.advisor-no-directory .prose h3{margin-bottom:20px}
+body.advisor-no-directory .advisor-snapshot-options article{grid-template-rows:auto 1fr;row-gap:0;align-items:start}
+body.advisor-no-directory .advisor-snapshot-options h3{margin:0 0 20px}
+body.advisor-no-directory .advisor-snapshot-options article>p{margin:0;align-self:start}
+body.advisor-no-directory #advisor-chapter-04 .section-title h2 .title-line{display:block}
+@media(max-width:700px){
+ body.advisor-no-directory .case-section>.section-grid>.section-title{margin-bottom:24px!important}
+ body.advisor-no-directory .prose h3,body.advisor-no-directory .advisor-snapshot-options h3{margin-bottom:16px}
+}
+
+/* Five text roles. Two weights. One spacing scale. */
+body.advisor-no-directory{
+ --type-display:clamp(50px,7.2vw,104px);
+ --type-section:48px;
+ --type-subheading:28px;
+ --type-body:18px;
+ --type-note:14px;
+ --gap-section-copy:32px;
+ --gap-heading-copy:20px;
+}
+body.advisor-no-directory .case-hero h1{font-size:var(--type-display)!important;font-weight:700!important;line-height:1.04}
+body.advisor-no-directory :is(.section-title h2,.overview-copy :is(h2,h3),.overview-static-stage h3){font-size:var(--type-section)!important;font-weight:700!important;line-height:1.15!important;letter-spacing:-.035em}
+body.advisor-no-directory :is(.prose h3,.ownership-map strong,.advisor-snapshot-options h3,.advisor-findings h3,.advisor-test-decision h3){font-size:var(--type-subheading)!important;font-weight:700!important;line-height:1.25!important;letter-spacing:-.025em}
+body.advisor-no-directory .case-statement{font-size:var(--type-subheading)!important;font-weight:400;line-height:1.4}
+body.advisor-no-directory :is(.hero-deck>p,.prose p,.prose>.lead,.overview-copy>p,.overview-static-stage>p,#overview-issues li,.ownership-map span,.fact-grid dd,.advisor-snapshot-options p,.advisor-case-detail>summary){font-size:var(--type-body)!important;font-weight:400;line-height:1.6}
+body.advisor-no-directory :is(.case-context,.fact-grid dt,figcaption,.caption,.caption span,.overview-film figcaption span,.overview-instruction,.advisor-compare-help,.advisor-compare-controls button,.ownership-map small,.advisor-option-label,.advisor-findings article>span){font-size:var(--type-note)!important;font-weight:400;line-height:1.5!important}
+body.advisor-no-directory :is(figcaption p,figcaption span,figcaption button){font-size:var(--type-note)!important}
+body.advisor-no-directory .prose strong{font-weight:700}
+body.advisor-no-directory .case-section:not(#advisor-chapter-01)>.section-grid>.section-title{display:block;margin-bottom:var(--gap-section-copy)!important}
+body.advisor-no-directory :is(.prose h3,.advisor-snapshot-options h3){margin-bottom:var(--gap-heading-copy)}
+body.advisor-no-directory .overview-copy :is(h2,h3){margin-bottom:var(--gap-section-copy)}
+@media(max-width:700px){
+ body.advisor-no-directory{--type-display:50px;--type-section:32px;--type-subheading:24px;--type-body:16px;--type-note:14px;--gap-section-copy:24px;--gap-heading-copy:16px}
+ body.advisor-no-directory .case-section>.section-grid>.section-title{margin-bottom:var(--gap-section-copy)!important}
+ body.advisor-no-directory :is(.prose h3,.advisor-snapshot-options h3){margin-bottom:var(--gap-heading-copy)}
+}
+
+/* Side labels sit outside the UI, never over its controls. */
+body.advisor-no-directory .advisor-compare-legend{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:12px;color:var(--case-note);font-size:var(--type-note);line-height:1.5}
+body.advisor-no-directory .advisor-compare-legend span{background:none;padding:0;font-weight:400}
+body.advisor-no-directory .advisor-compare.is-portrait .advisor-compare-legend{max-width:520px;margin-inline:auto}
+/* Crop the source recording's blue selection edge in both playback and poster states. */
+body.advisor-no-directory .advisor-option-grid .advisor-animation>img{clip-path:inset(0 0 0 3px)}
