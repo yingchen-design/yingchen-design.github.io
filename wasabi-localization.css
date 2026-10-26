@@ -10,3 +10,7 @@
 
 .wasabi-cover{margin:0;padding:0 5vw 64px}.wasabi-cover img{display:block;width:100%;height:auto}.wasabi-cover{background:var(--paper)}
 @media(max-width:700px){.wasabi-cover{padding:0 0 35px}}
+
+/* Align every photo crop with its own caption and column edge. */
+.wasabi-photos .wasabi-crop{margin-left:0!important;margin-right:auto!important}
+.wasabi-photos figure,.wasabi-photos figcaption{text-align:left}
