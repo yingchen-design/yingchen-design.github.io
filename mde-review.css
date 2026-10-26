@@ -5,11 +5,6 @@ body[data-case="mde"] .moon-detail-copy>h3{margin:0 0 16px!important;line-height
 body[data-case="mde"] .moon-detail-copy>h4{margin:0 0 12px!important;font-size:18px;line-height:1.5;font-weight:400}
 body[data-case="mde"] .moon-detail-copy>p{margin:0!important;font-size:18px;line-height:1.7!important;letter-spacing:normal!important}
 body[data-case="mde"] .moon-detail>figure{grid-column:auto;grid-row:auto;align-self:start;margin:0;min-width:0}
-body[data-case="mde"] .mde-reference-copy{display:flex;flex-direction:column;align-items:stretch;gap:16px}
-body[data-case="mde"] .mde-reference-copy>h3,body[data-case="mde"] .mde-reference-copy>p{margin:0!important}
-body[data-case="mde"] .mde-reference-copy>figure{margin:8px 0 0}
-body[data-case="mde"] .mde-reference-copy img{width:100%;height:auto}
-body[data-case="mde"] .mde-reference-copy figcaption{margin-top:12px;line-height:1.5}
 body[data-case="mde"] .decision-grid{align-items:stretch;grid-auto-rows:1fr}
 body[data-case="mde"] .decision-grid>article{height:auto;align-self:stretch;box-sizing:border-box}
 body[data-case="mde"] .decision-grid>article>p{margin-bottom:0}
@@ -49,9 +44,6 @@ body[data-case="mde"] #visual-mde-01 .vd-evidence{grid-template-columns:repeat(3
 body[data-case="mde"] .problem-grid{align-items:stretch;grid-auto-rows:1fr}
 body[data-case="mde"] .problem-grid>article{height:auto;align-self:stretch;box-sizing:border-box}
 body[data-case="mde"] .problem-grid>article>p{margin-bottom:0}
-body[data-case="mde"] .mde-reference-copy>figure{margin:0}
-body[data-case="mde"] .mde-reference-text>h3{margin:0 0 16px}
-body[data-case="mde"] .mde-reference-text>p{margin:0;line-height:1.7}
 body[data-case="mde"] #visual-mde-02{width:100%;max-width:732px;margin-left:0;margin-right:0}
 body[data-case="mde"] #visual-mde-02 .vd-evidence{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
 body[data-case="mde"] .puc-closeup{margin-top:24px;width:100%}
@@ -67,3 +59,25 @@ body[data-case="mde"] .puc-closeup p{font-size:14px!important;line-height:1.5!im
 #project-moon .moon-overview .mde-reference-story>p{font-size:16px;margin:0;line-height:1.6}
 #project-moon .moon-overview figcaption{display:none}
 @media(max-width:760px){#project-moon .moon-overview{grid-template-columns:1fr}body[data-case="mde"] #visual-mde-02 .vd-evidence{grid-template-columns:1fr}}
+
+/* One principle, two coordinated pieces of evidence. */
+body[data-case="mde"] .mde-foundation{margin:48px 0 64px}
+body[data-case="mde"] .mde-foundation-intro{max-width:780px;margin-bottom:28px}
+body[data-case="mde"] .mde-foundation-intro h3{margin:0 0 16px;max-width:none}
+body[data-case="mde"] .mde-foundation-intro p{margin:0;max-width:none;line-height:1.7}
+body[data-case="mde"] .mde-foundation-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;align-items:start}
+body[data-case="mde"] .mde-foundation-figure{margin:0;min-width:0}
+body[data-case="mde"] .mde-foundation-frame{aspect-ratio:5/3;width:100%;overflow:hidden}
+body[data-case="mde"] .mde-foundation-frame>img{display:block;width:100%;height:100%;object-fit:contain;object-position:left top}
+body[data-case="mde"] .mde-gradient-spec{display:flex;flex-direction:column;padding:20px 24px;background:#f5f5f4;gap:14px}
+body[data-case="mde"] .mde-gradient-swatch{flex:1;min-height:0;background:linear-gradient(90deg,#e34a22,66%,#ff9900)}
+body[data-case="mde"] .mde-gradient-stops{display:flex;justify-content:space-between;gap:20px;font-size:14px;line-height:1.4}
+body[data-case="mde"] .mde-gradient-stops>span{display:flex;flex-direction:column;gap:4px}
+body[data-case="mde"] .mde-gradient-stops>span:last-child{text-align:right}
+body[data-case="mde"] .mde-gradient-stops b{font-weight:700}
+body[data-case="mde"] .mde-gradient-stops small{font-size:13px;color:#626262}
+body[data-case="mde"] .mde-gradient-location{font-size:13px!important;line-height:1.4!important;margin:0;color:#626262}
+body[data-case="mde"] .mde-foundation-figure>figcaption{margin:14px 0 0;padding:0;font-size:14px;line-height:1.5}
+body[data-case="mde"] .mde-original-spec{display:inline-block;font-size:13px;line-height:1.5;margin-top:8px;text-decoration:underline;text-underline-offset:3px;color:#626262}
+@media(max-width:760px){body[data-case="mde"] .mde-foundation-grid{grid-template-columns:1fr;gap:28px}body[data-case="mde"] .mde-foundation{margin:32px 0 48px}body[data-case="mde"] .mde-gradient-spec{padding:18px;gap:12px}}
+body[data-case="mde"] .mde-foundation-intro>h3{max-width:none!important;word-break:keep-all;overflow-wrap:normal}

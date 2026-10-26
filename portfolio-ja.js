@@ -10,7 +10,7 @@ if(nav&&!nav.querySelector('.language-switch')){
 function links(){document.querySelectorAll('a[href]').forEach(a=>{if(a.closest('.language-switch')||a.hasAttribute('download'))return;try{const u=new URL(a.getAttribute('href'),location.href);if(u.origin===location.origin&&u.pathname.endsWith('.html')){u.searchParams.set('lang',lang);const value=u.pathname+u.search+u.hash;if(a.getAttribute('href')!==value)a.setAttribute('href',value)}}catch{}})}
 links();
 if(lang!=='ja')return;
-fetch('portfolio-ja-data.json?v=9').then(r=>{if(!r.ok)throw Error('Japanese copy unavailable');return r.json()}).then(dict=>{
+fetch('portfolio-ja-data.json?v=10').then(r=>{if(!r.ok)throw Error('Japanese copy unavailable');return r.json()}).then(dict=>{
  const normalize=text=>text.replace(/\s+/g,' ').trim();
  let pending=false;
  function translate(){pending=false;const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode(node){return node.parentElement?.closest('script,style,svg,textarea,.language-switch')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT}});const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);for(const node of nodes){const key=normalize(node.nodeValue),value=dict[key];if(value&&value!==key)node.nodeValue=node.nodeValue.replace(node.nodeValue.trim(),value)}links();}
