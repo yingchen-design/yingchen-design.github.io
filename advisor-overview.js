@@ -10,6 +10,26 @@ let current=-1,visible=false,paused=reduced.matches,pending=false,morphActive=fa
 let wallAnimations=[];
 let zoomGoal=0,zoomValue=0,zoomFrom=0,zoomStarted=0;
 const clamp=v=>Math.max(0,Math.min(1,v)),smooth=v=>v*v*(3-2*v);
+// Keep the remaining story visible without intercepting wheel or touch scrolling.
+const guide=document.createElement('div');guide.className='overview-guide';
+const guideCount=document.createElement('span');guideCount.className='overview-guide-count';
+const guideNext=document.createElement('button');guideNext.type='button';guideNext.className='overview-guide-next';
+guide.append(guideCount,guideNext);pin.append(guide);
+const guideJa=new URLSearchParams(location.search).get('lang')==='ja';
+function updateGuide(){
+ guide.hidden=compact.matches||reduced.matches||morphActive;
+ const n=Math.max(0,current);
+ const count=guideJa?`ステップ ${n+1} / 3`:`Step ${n+1} of 3`;
+ const labels=guideJa?['続けてスクロール：共通の基盤へ ↓','続けてスクロール：新しいポータルへ ↓','続けてスクロール：全体を見る ↓']:['Keep scrolling: shared foundation ↓','Keep scrolling: redesigned portal ↓','Keep scrolling: explore the full experience ↓'];
+ if(guideCount.textContent!==count)guideCount.textContent=count;
+ if(guideNext.textContent!==labels[n])guideNext.textContent=labels[n];
+ guideNext.setAttribute('aria-label',guideJa?'クリックして次へ進む。スクロールでも進めます。':'Click to continue to the next section, or keep scrolling.');
+}
+guideNext.addEventListener('click',()=>{
+ const offset=scrollY;
+ const top=current<2?offset+root.getBoundingClientRect().top-108+(.35+.25*Math.max(0,current))*(root.offsetHeight-innerHeight+128):offset+galleryWindow.getBoundingClientRect().top-96;
+ scrollTo({top,behavior:'smooth'});
+});
 copy.replaceChildren();
 const panels=stages.map((stage,i)=>{
  const panel=document.createElement('div');panel.className='overview-stage-copy';
@@ -25,6 +45,7 @@ image.replaceWith(media);
 const overlay=document.createElement('div');overlay.className='overview-morph';overlay.setAttribute('aria-hidden','true');overlay.hidden=true;
 const snapshot=document.createElement('canvas');snapshot.className='overview-morph-snapshot';overlay.append(snapshot);document.body.append(overlay);
 function sync(){
+ updateGuide();
  const run=visible&&!paused&&!reduced.matches&&!compact.matches&&!document.hidden&&!morphActive;
  videos.forEach((v,i)=>{if(i===current&&run){if(v.paused)v.play().catch(()=>{});}else if(!v.paused)v.pause();});
  const label=paused?'Play motion':'Pause motion';if(toggle.textContent!==label)toggle.textContent=label;

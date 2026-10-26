@@ -33,3 +33,13 @@ body.advisor-no-directory .advisor-brand-showcase{width:100vw;max-width:none!imp
 @media screen {
  body.advisor-no-directory main {max-width:none;width:100%;margin-inline:0}
 }
+
+/* A persistent next-step cue for the scroll-driven desktop introduction. */
+.overview-guide{display:flex;align-items:center;justify-content:space-between;gap:20px;width:100%;margin-top:12px;color:#626262;font:14px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif}
+.overview-guide[hidden]{display:none}
+.overview-guide-count{white-space:nowrap;font-variant-numeric:tabular-nums}
+.overview-guide-next{border:0;background:none;color:#171717;font:inherit;min-height:44px;padding:8px 0;cursor:pointer;text-align:right;text-decoration:underline;text-underline-offset:5px}
+.overview-guide-next:hover{color:#626262}
+.overview-guide-next:focus-visible{outline:2px solid #354fd1;outline-offset:5px}
+@media(max-width:850px),(max-height:650px),(prefers-reduced-motion:reduce){.overview-guide{display:none}}
+@media print{.overview-guide{display:none}}
