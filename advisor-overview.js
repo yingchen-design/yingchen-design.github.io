@@ -7,6 +7,7 @@ const pin=root.querySelector('.overview-pin'),copy=root.querySelector('.overview
 const gallery=document.querySelector('.advisor-brand-showcase'),galleryWindow=gallery.querySelector('.advisor-brand-window');
 const base='assets/advisor-redesign/opening-motion/';
 let current=-1,visible=false,paused=reduced.matches,pending=false,morphActive=false,wall=null,lastMorph=-1;
+let wallAnimations=[];
 let zoomGoal=0,zoomValue=0,zoomFrom=0,zoomStarted=0;
 const clamp=v=>Math.max(0,Math.min(1,v)),smooth=v=>v*v*(3-2*v);
 copy.replaceChildren();
@@ -40,7 +41,17 @@ function prepareWall(){
 }
 function beginMorph(){
  prepareWall();morphActive=true;gallery.classList.add('is-morphing');
- const originals=galleryWindow.querySelectorAll('.advisor-brand-track');wall.querySelectorAll('.advisor-brand-track').forEach((track,i)=>{track.style.animation='none';track.style.transform=getComputedStyle(originals[i]).transform;});
+ const originals=galleryWindow.querySelectorAll('.advisor-brand-track');
+ wallAnimations=Array.from(wall.querySelectorAll('.advisor-brand-track'),(track,i)=>{
+  const source=originals[i],animation=source.getAnimations()[0];
+  track.style.animation='none';track.style.transform=getComputedStyle(source).transform;
+  if(!animation)return null;
+  const timing=animation.effect.getTiming();
+  const moving=track.animate(animation.effect.getKeyframes(),{duration:timing.duration,iterations:Infinity,direction:timing.direction,easing:timing.easing});
+  moving.currentTime=animation.currentTime;
+  if(paused||gallery.classList.contains('is-paused')||reduced.matches)moving.pause();
+  return {moving,source:animation};
+ });
  const v=videos[2];snapshot.width=v.videoWidth||800;snapshot.height=v.videoHeight||450;const ctx=snapshot.getContext('2d');ctx.fillStyle='#f3f3f2';ctx.fillRect(0,0,snapshot.width,snapshot.height);
  if(v.readyState>=2)ctx.drawImage(v,0,0,snapshot.width,snapshot.height);
  else{const poster=new Image();poster.src=v.poster;if(poster.complete&&poster.naturalWidth)ctx.drawImage(poster,0,0,snapshot.width,snapshot.height);}
@@ -48,6 +59,7 @@ function beginMorph(){
 }
 function clearMorph(){
  if(!morphActive)return;
+ wallAnimations.forEach(pair=>{if(pair){pair.source.currentTime=pair.moving.currentTime;pair.moving.cancel();}});wallAnimations=[];
  overlay.hidden=true;film.style.opacity='';copy.style.opacity='';copy.style.visibility='';gallery.style.visibility='';gallery.classList.remove('is-morphing');morphActive=false;lastMorph=-1;sync();
 }
 function morph(amount,target){
