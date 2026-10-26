@@ -7,6 +7,7 @@ const pin=root.querySelector('.overview-pin'),copy=root.querySelector('.overview
 const gallery=document.querySelector('.advisor-brand-showcase'),galleryWindow=gallery.querySelector('.advisor-brand-window');
 const base='assets/advisor-redesign/opening-motion/';
 let current=-1,visible=false,paused=reduced.matches,pending=false,morphActive=false,wall=null,lastMorph=-1;
+let zoomGoal=0,zoomValue=0,zoomFrom=0,zoomStarted=0;
 const clamp=v=>Math.max(0,Math.min(1,v)),smooth=v=>v*v*(3-2*v);
 copy.replaceChildren();
 const panels=stages.map((stage,i)=>{
@@ -71,7 +72,15 @@ function update(){
  let next=p<.24?0:p<.48?1:2;
  // Small hysteresis prevents trackpad micro-reversals from flashing adjacent stages.
  if(current===0&&p<.255)next=0;if(current===1&&p>=.225&&p<.495)next=1;if(current===2&&p>=.465)next=2;
- if(rect.top<innerHeight&&target.bottom>96){show(next);morph(clamp((p-.72)/.28),target);}else clearMorph();
+ if(rect.top<innerHeight&&target.bottom>96){
+  show(next);
+  const goal=p>=.72?1:p<.68?0:zoomGoal;
+  if(goal!==zoomGoal){zoomFrom=zoomValue;zoomGoal=goal;zoomStarted=performance.now();}
+  const elapsed=clamp((performance.now()-zoomStarted)/380);
+  zoomValue=zoomFrom+(zoomGoal-zoomFrom)*(1-Math.pow(1-elapsed,3));
+  morph(zoomValue,target);
+  if(elapsed<1)schedule();
+ }else{clearMorph();zoomGoal=zoomValue=zoomFrom=0;}
 }
 function schedule(){if(!pending){pending=true;requestAnimationFrame(update);}}
 const staticStages=document.createElement('div');staticStages.className='overview-static-stages';
