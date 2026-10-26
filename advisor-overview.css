@@ -27,3 +27,9 @@ body.advisor-no-directory .advisor-brand-showcase{width:100vw;max-width:none!imp
 .overview-morph-wall{will-change:opacity}
 .overview-lab.is-rest #overview-motion{display:none}
 @media(max-width:850px),(prefers-reduced-motion:reduce){.overview-copy{display:block}.overview-stage-copy:not(.is-active){display:none}.overview-stage-copy{transition:none}}
+
+/* Sections already use the viewport-based shared edge. A capped main would
+   subtract those gutters again on wide/4K screens and collapse the opening. */
+@media screen {
+ body.advisor-no-directory main {max-width:none;width:100%;margin-inline:0}
+}
