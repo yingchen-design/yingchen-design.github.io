@@ -36,3 +36,11 @@ body[data-case="mde"] #visual-mde-01 .mde-reference-image{width:100%;max-width:7
  #project-moon .moon-tablist{flex-direction:column;align-items:stretch}
  #project-moon .moon-tablist button{flex:none;text-align:left;font-size:16px;min-height:48px}
 }
+
+/* One readable media column: image, heading, notes and caption share edges. */
+body[data-case="mde"] .mde-media-column,
+body[data-case="mde"] #visual-mde-01{width:100%;max-width:732px;margin-left:0;margin-right:0}
+body[data-case="mde"] .mde-media-column>img{width:100%;max-width:100%;height:auto}
+body[data-case="mde"] .mde-media-column>figcaption{width:100%;box-sizing:border-box}
+body[data-case="mde"] #visual-mde-01 .vd-evidence{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+@media(max-width:600px){body[data-case="mde"] #visual-mde-01 .vd-evidence{grid-template-columns:1fr;gap:18px}}
