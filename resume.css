@@ -33,3 +33,47 @@ html[lang=ja] .job-date span{margin-left:0;display:block}
 }
 
 #print-resume{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;line-height:1.5}
+
+/* Profile reading layout: a substantial portrait and a clear type hierarchy. */
+@media screen{
+ body.resume-page main{max-width:1200px;padding:144px 48px 0}
+ .resume-intro{padding-bottom:56px}
+ .resume-intro h1{font-size:64px;font-weight:700;line-height:1.12;letter-spacing:0;margin-bottom:40px}
+ .resume-opening,html[lang=ja] .resume-opening{grid-template-columns:280px minmax(0,1fr);gap:64px;align-items:start}
+ .resume-position{font-size:18px;font-weight:400;line-height:1.5;letter-spacing:0;color:#626262}
+ .about-portrait{width:280px;height:auto;aspect-ratio:3/4;object-fit:cover;margin-top:20px}
+ .about-lead{font-size:28px!important;font-weight:700;line-height:1.35!important;letter-spacing:0;margin-bottom:20px}
+ .resume-summary>p,.job-intro,.resume-job li,.resume-school p,.resume-skills p{font-size:17px;line-height:1.65;letter-spacing:0}
+ .resume-summary>p{max-width:none}
+ .about-approach{margin-top:16px}
+ .resume-contact{font-size:14px;line-height:1.6;gap:6px;margin-top:24px}
+ #print-resume{font-size:14px;margin-top:24px;padding:12px 20px}
+ .resume-section{grid-template-columns:200px minmax(0,1fr);gap:48px;padding:40px 0}
+ .resume-section>h2{font-size:20px;font-weight:700;letter-spacing:0}
+ .job-heading h3,.resume-school h3{font-size:24px;font-weight:700;line-height:1.3;letter-spacing:0;margin-bottom:8px}
+ .job-heading>div>p{font-size:17px;line-height:1.5}
+ .job-date,.resume-school .secondary,.job-projects{font-size:14px;line-height:1.6}
+ .resume-job strong{font-weight:700}
+ .resume-job li{margin-bottom:14px}
+ .resume-skills h3{font-size:17px;font-weight:700;line-height:1.5}
+}
+@media screen and (max-width:850px){
+ body.resume-page main{padding:132px 32px 0}
+ .resume-intro h1{font-size:52px}
+ .resume-opening,html[lang=ja] .resume-opening{grid-template-columns:220px minmax(0,1fr);gap:32px}
+ .about-portrait{width:220px}
+ .resume-section{grid-template-columns:140px minmax(0,1fr);gap:32px}
+ .job-heading{flex-wrap:wrap;gap:12px}.job-date{text-align:left}
+}
+@media screen and (max-width:600px){
+ body.resume-page main{padding:124px 20px 0}
+ .resume-intro h1{font-size:42px;line-height:1.15;margin-bottom:28px}
+ .resume-opening,html[lang=ja] .resume-opening{grid-template-columns:1fr;gap:28px}
+ .about-identity{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+ .about-portrait{width:100%;max-width:280px;margin:0}
+ .about-lead{font-size:26px!important}
+ .resume-intro{padding-bottom:24px}
+ .resume-section{grid-template-columns:1fr;gap:24px;padding:32px 0}
+ .job-heading{display:block}.job-date{margin-top:10px}
+ .resume-contact a{font-size:14px}
+}
