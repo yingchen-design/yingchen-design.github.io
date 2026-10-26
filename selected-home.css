@@ -97,12 +97,12 @@ dialog{width:100%;height:100svh;max-width:none;max-height:none;margin:0;padding:
 @media(max-width:760px){html[lang=ja] .mobile-project h2{word-break:keep-all;overflow-wrap:anywhere}}
 
 /* A persistent project affordance and an explicit, controllable slideshow. */
-.project-open-label{position:absolute;bottom:20px;right:20px;background:#fff;color:#171717;padding:11px 16px;font-size:14px;line-height:1.4;border:1px solid #ddd;opacity:0;pointer-events:none;transition:opacity .2s}
-.gallery-slide.is-active .project-open-label{opacity:1}
-.gallery-ready .gallery-slide.is-active{cursor:pointer}
+.gallery-slide.is-active .gallery-ready .gallery-slide.is-active{cursor:pointer}
 .gallery-autoplay{display:flex;align-items:center;justify-content:center;gap:10px;font-size:12px;color:#626262;white-space:nowrap}
 .autoplay-progress{width:64px;height:2px;background:#ddd;overflow:hidden}
 .autoplay-progress i{display:block;width:100%;height:100%;background:#171717;transform:scaleX(0);transform-origin:left}
 #toggle-autoplay{font-size:14px;min-width:44px;min-height:44px;padding:8px;line-height:1;color:#171717}
 .mobile-open-label{display:inline-block;margin-top:12px;font-size:14px;line-height:1.5;text-decoration:underline;text-underline-offset:4px}
 @media(min-width:761px){.gallery-caption{bottom:76px}.gallery-caption .project-navigation{position:relative}.gallery-caption #project-position{position:absolute;top:100%;left:0;width:100%;margin-top:5px}.gallery-autoplay{position:absolute;top:calc(100% + 27px);left:50%;transform:translateX(-50%)}}
+
+.title-open-label{display:block;margin-top:7px;font-size:13px;font-weight:400;line-height:1.4;text-decoration:underline;text-underline-offset:4px;color:#626262}

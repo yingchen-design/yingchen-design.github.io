@@ -68,6 +68,7 @@
     const card = cards[index];
     title.textContent = card.dataset.title;
     title.href = card.href;
+    document.querySelector('.title-open-label').href=card.href;
     discipline.textContent = card.dataset.discipline;
     note.textContent = card.dataset.note;
     position.textContent = language === 'ja' ? `${index+1} / ${count}` : `${index+1} of ${count}`;
