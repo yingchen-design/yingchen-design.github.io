@@ -87,3 +87,15 @@ body[data-case="mde"] .mde-art-opening>svg,
 body[data-case="mde"] .mde-art-opening>figcaption{width:100%;max-width:800px;margin-inline:auto}
 body[data-case="mde"] .mde-art-opening>figcaption{font-size:14px!important;line-height:1.6;gap:16px}
 @media(max-width:650px){body[data-case="mde"] .mde-art-opening>figcaption{gap:4px;font-size:13px!important}}
+
+/* Device evidence shares the case study's text / image grid. */
+body[data-case="mde"] .mde-device-story{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:32px}
+body[data-case="mde"] .mde-device-copy{min-width:0}
+body[data-case="mde"] .mde-device-copy>h3{margin:0 0 16px!important;max-width:none!important}
+body[data-case="mde"] .mde-device-copy>p{margin:0!important;max-width:none}
+body[data-case="mde"] .mde-device-story>figure{width:100%;max-width:none;margin:0!important;min-width:0}
+body[data-case="mde"] .mde-device-story>figure>img{display:block;width:100%;max-width:none;height:auto}
+body[data-case="mde"] .mde-device-story figcaption{font-size:14px!important;line-height:1.6;margin-top:12px}
+@media(max-width:760px){body[data-case="mde"] .mde-device-story{grid-template-columns:1fr;gap:24px}}
+
+html[lang="ja"] body[data-case="mde"] .mde-device-copy>h3{word-break:keep-all;overflow-wrap:normal}
