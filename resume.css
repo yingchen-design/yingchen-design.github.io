@@ -77,3 +77,5 @@ html[lang=ja] .job-date span{margin-left:0;display:block}
  .job-heading{display:block}.job-date{margin-top:10px}
  .resume-contact a{font-size:14px}
 }
+
+@media screen{.about-identity>.resume-position{display:none}.about-identity>.about-portrait{margin-top:0}}
