@@ -105,4 +105,14 @@ dialog{width:100%;height:100svh;max-width:none;max-height:none;margin:0;padding:
 .mobile-open-label{display:inline-block;margin-top:12px;font-size:14px;line-height:1.5;text-decoration:underline;text-underline-offset:4px}
 @media(min-width:761px){.gallery-caption{bottom:76px}.gallery-caption .project-navigation{position:relative}.gallery-caption #project-position{position:absolute;top:100%;left:0;width:100%;margin-top:5px}.gallery-autoplay{position:absolute;top:calc(100% + 27px);left:50%;transform:translateX(-50%)}}
 
-.title-open-label{display:block;margin-top:7px;font-size:13px;font-weight:400;line-height:1.4;text-decoration:underline;text-underline-offset:4px;color:#626262}
+
+/* Caption: context left, project centre, clear entry point right. */
+.gallery-caption .project-context{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:5px;max-width:360px}
+.gallery-caption .project-context #project-note{margin:0;font-size:14px;line-height:1.5;color:#626262}
+.gallery-caption .project-action{display:flex;align-items:center;justify-content:flex-end}
+.gallery-caption #view-project{font-size:16px;line-height:1.5;min-height:44px;display:flex;align-items:center;padding:0;text-decoration:none}
+.gallery-caption #view-project:hover{text-decoration:underline;text-underline-offset:5px}
+@media(hover:hover) and (pointer:fine){
+ .gallery-ready .gallery-slide.is-active,.gallery-ready .gallery-slide.is-active *{cursor:url('assets/project-open-cursor.svg') 24 24,pointer}
+ .gallery-stage.is-dragging,.gallery-stage.is-dragging *{cursor:grabbing!important}
+}
