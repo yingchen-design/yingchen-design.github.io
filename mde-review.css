@@ -44,3 +44,26 @@ body[data-case="mde"] .mde-media-column>img{width:100%;max-width:100%;height:aut
 body[data-case="mde"] .mde-media-column>figcaption{width:100%;box-sizing:border-box}
 body[data-case="mde"] #visual-mde-01 .vd-evidence{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
 @media(max-width:600px){body[data-case="mde"] #visual-mde-01 .vd-evidence{grid-template-columns:1fr;gap:18px}}
+
+/* Second review: consistent repeated cards and a single home for the interface. */
+body[data-case="mde"] .problem-grid{align-items:stretch;grid-auto-rows:1fr}
+body[data-case="mde"] .problem-grid>article{height:auto;align-self:stretch;box-sizing:border-box}
+body[data-case="mde"] .problem-grid>article>p{margin-bottom:0}
+body[data-case="mde"] .mde-reference-copy>figure{margin:0}
+body[data-case="mde"] .mde-reference-text>h3{margin:0 0 16px}
+body[data-case="mde"] .mde-reference-text>p{margin:0;line-height:1.7}
+body[data-case="mde"] #visual-mde-02{width:100%;max-width:732px;margin-left:0;margin-right:0}
+body[data-case="mde"] #visual-mde-02 .vd-evidence{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+body[data-case="mde"] .puc-closeup{margin-top:24px;width:100%}
+body[data-case="mde"] .puc-closeup img{display:block;width:100%;height:auto}
+body[data-case="mde"] .puc-closeup p{font-size:14px!important;line-height:1.5!important;margin:12px 0 0;color:#626262}
+#project-moon .moon-overview{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:32px}
+#project-moon .moon-overview .moon-tablist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:0 0 14px}
+#project-moon .moon-overview .moon-tablist button{font-size:14px;min-height:44px;padding:9px 10px;text-align:left}
+#project-moon .moon-overview [role="tabpanel"]{padding:0}
+#project-moon .moon-overview .mde-reference-story{margin:0;padding:0}
+#project-moon .moon-overview .mde-reference-story>figure{margin:0 0 16px}
+#project-moon .moon-overview .mde-reference-story>h3{font-size:20px;margin:0 0 10px;line-height:1.35}
+#project-moon .moon-overview .mde-reference-story>p{font-size:16px;margin:0;line-height:1.6}
+#project-moon .moon-overview figcaption{display:none}
+@media(max-width:760px){#project-moon .moon-overview{grid-template-columns:1fr}body[data-case="mde"] #visual-mde-02 .vd-evidence{grid-template-columns:1fr}}
