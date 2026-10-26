@@ -1,0 +1,38 @@
+/* MDE review: consistent top-aligned rows and readable Japanese text. */
+body[data-case="mde"] .moon-detail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:32px;margin:56px 0}
+body[data-case="mde"] .moon-detail-copy{display:block;min-width:0;align-self:start}
+body[data-case="mde"] .moon-detail-copy>h3{margin:0 0 16px!important;line-height:1.25!important}
+body[data-case="mde"] .moon-detail-copy>h4{margin:0 0 12px!important;font-size:18px;line-height:1.5;font-weight:400}
+body[data-case="mde"] .moon-detail-copy>p{margin:0!important;font-size:18px;line-height:1.7!important;letter-spacing:normal!important}
+body[data-case="mde"] .moon-detail>figure{grid-column:auto;grid-row:auto;align-self:start;margin:0;min-width:0}
+body[data-case="mde"] .mde-reference-copy{display:flex;flex-direction:column;align-items:stretch;gap:16px}
+body[data-case="mde"] .mde-reference-copy>h3,body[data-case="mde"] .mde-reference-copy>p{margin:0!important}
+body[data-case="mde"] .mde-reference-copy>figure{margin:8px 0 0}
+body[data-case="mde"] .mde-reference-copy img{width:100%;height:auto}
+body[data-case="mde"] .mde-reference-copy figcaption{margin-top:12px;line-height:1.5}
+body[data-case="mde"] .decision-grid{align-items:stretch;grid-auto-rows:1fr}
+body[data-case="mde"] .decision-grid>article{height:auto;align-self:stretch;box-sizing:border-box}
+body[data-case="mde"] .decision-grid>article>p{margin-bottom:0}
+body[data-case="mde"] .callout{max-width:none;width:auto;box-sizing:border-box}
+body[data-case="mde"] .callout>p{max-width:none;margin:0}
+body[data-case="mde"] .mde-reference-story>figure{margin:32px 0}
+body[data-case="mde"] img[src*="reference-p20-1"]{width:100%;max-width:800px}
+body[data-case="mde"] img[src*="reference-p22-5"]{width:100%;max-width:937px}
+body[data-case="mde"] #visual-mde-01 .mde-reference-image{width:100%;max-width:732px;height:auto}
+#project-moon .moon-overview{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:start;gap:40px;margin:32px 0 40px;padding:28px;background:#f4f4f3}
+#project-moon .moon-overview .index{font-size:16px;line-height:1.5;margin:0 0 18px}
+#project-moon .moon-overview .moon-metric{font-size:clamp(42px,5vw,64px)!important;line-height:1.1!important;font-weight:700!important;letter-spacing:-.035em!important;margin:0 0 20px!important;color:#171717;white-space:nowrap}
+#project-moon .moon-metric span{font-size:.65em;color:#626262;font-weight:400}
+#project-moon .moon-overview>div>p:last-child:not(.moon-metric){font-size:18px;line-height:1.65;margin:0;max-width:32ch}
+#project-moon .moon-overview figure{margin:0}
+#project-moon .moon-overview figcaption{font-size:14px;line-height:1.5;margin-top:12px}
+#project-moon .moon-tablist{gap:8px;padding:0 0 24px;align-items:stretch}
+#project-moon .moon-tablist button{font-size:18px;line-height:1.5;font-weight:400;min-height:52px;padding:12px 18px;color:#444;background:#f1f1f0;text-decoration:none;border:0}
+#project-moon .moon-tablist button[aria-selected="true"]{color:white;background:#171717;font-weight:700;text-decoration:none}
+#project-moon .moon-tablist button:focus-visible{outline:2px solid #354fd1;outline-offset:3px}
+@media(max-width:760px){
+ body[data-case="mde"] .moon-detail{grid-template-columns:1fr;gap:24px;margin:40px 0}
+ #project-moon .moon-overview{grid-template-columns:1fr;padding:20px;gap:24px}
+ #project-moon .moon-tablist{flex-direction:column;align-items:stretch}
+ #project-moon .moon-tablist button{flex:none;text-align:left;font-size:16px;min-height:48px}
+}
