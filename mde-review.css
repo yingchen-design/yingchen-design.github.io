@@ -84,7 +84,7 @@ body[data-case="mde"] .mde-foundation-intro>h3{max-width:none!important;word-bre
 
 /* Keep the opening artwork within its original detail budget. */
 body[data-case="mde"] .mde-art-opening>svg,
-body[data-case="mde"] .mde-art-opening>figcaption{width:100%;max-width:800px;margin-inline:auto}
+body[data-case="mde"] .mde-art-opening>figcaption{width:100%;max-width:800px;margin-left:0;margin-right:auto}
 body[data-case="mde"] .mde-art-opening>figcaption{font-size:14px!important;line-height:1.6;gap:16px}
 @media(max-width:650px){body[data-case="mde"] .mde-art-opening>figcaption{gap:4px;font-size:13px!important}}
 
