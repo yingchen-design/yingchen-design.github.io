@@ -27,11 +27,11 @@
     const now=performance.now(),dt=Math.min(now-autoLast,200);autoLast=now;
     const stopped=autoPaused||autoHover||reduced.matches||document.hidden||!!drag||document.documentElement.classList.contains('gallery-boot');
     if(!stopped)autoElapsed+=dt;
-    autoBar.style.transform=`scaleX(${Math.min(1,autoElapsed/6500)})`;
+    autoBar.style.transform=`scaleX(${Math.min(1,autoElapsed/3000)})`;
     const ja=language==='ja';
     const label=reduced.matches?(ja?'手動切替':'Manual'):stopped?(ja?'一時停止':'Paused'):(ja?'自動再生':'Auto');if(autoLabel.textContent!==label)autoLabel.textContent=label;
     autoButton.disabled=reduced.matches;position.setAttribute('aria-live',stopped?'polite':'off');autoButton.textContent=autoPaused?'▶':'Ⅱ';autoButton.setAttribute('aria-label',autoPaused?(ja?'自動再生を開始':'Start automatic slideshow'):(ja?'自動再生を一時停止':'Pause automatic slideshow'));
-    if(autoElapsed>=6500){autoElapsed=0;target=Math.round(target)+1;requestFrame();}
+    if(autoElapsed>=3000){autoElapsed=0;target=Math.round(target)+1;requestFrame();}
   },100);
   const copy = {
     en: {subtitle:'Visual & product designer',index:'Work',about:'About',view:'View project',drag:'',close:'Close',selected:'Work index',visual:'Visual gallery ↗',intro:'I connect visual expression and product experience.',detail:'Based in Tokyo, my experience at Amazon, RightCapital, and IBM spans Japanese campaigns, B2B products, design systems, and creative collaboration.',approach:'I bring a visual designer’s eye to complex products, and a product designer’s thinking to visual work.',contact:'Say hello ↗',location:'Tokyo, Japan'},
