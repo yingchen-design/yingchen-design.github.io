@@ -760,6 +760,6 @@
   "User testing & stakeholder discussion. Conducted a qualitative usability pilot with 6 internal participants. Brought findings on navigation, action visibility and interface clarity into design discussions and follow-up priorities.": "ユーザーテストと合意形成。社内6名による定性的なユーザビリティ試行を実施。ナビゲーション、操作の発見性、表示の明確さについて得た示唆を、設計の議論と後続の優先順位検討につなげました。",
   "Cross-functional quality. Worked with engineering through implementation and design QA, including Client Portal themes, web / PDF consistency and Redtail / Wealthbox integrations.": "部門をまたぐ品質管理。実装とデザインQAで開発と協働し、Client Portalのテーマ、WebとPDFの整合性、Redtail／Wealthbox連携を確認しました。",
   "Work": "作品一覧",
-  "Download Japanese resume ↓": "日本語の履歴書をダウンロード ↓",
-  "Download resume ↓": "日本語の履歴書をダウンロード ↓"
+  "Download Japanese resume": "日本語の履歴書をダウンロード",
+  "Download resume": "日本語の履歴書をダウンロード"
 }
